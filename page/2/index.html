@@ -229,6 +229,130 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/21/分析/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yida">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="益达的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/21/分析/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-21T13:21:27+08:00">
+                2018-09-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>基础设计模式的考点：</p>
+<p>单例的弊端：<br>1.一个类只被实例化一次，提供了对唯一实例的受控访问<br>2.节省系统资源<br>3.允许可变数目的实例</p>
+<p>缺点：<br>一个类只有一个对象，可能造成责任过重，在一定程度上违背了单一职责的原则<br>由于单例模式中没有抽象层，因此单例类的扩展有很大的困难<br>滥用单例将带来一些负面问题，如为了节省资源将数据连接池对象设计为单例。</p>
+<p>1、dSYM你是如何分析的<br>方法1 使用XCode<br>这种方法可能是最容易的方法了。</p>
+<p>要使用Xcode符号化 crash log，你需要下面所列的3个文件：<br>crash报告（.crash文件）<br>符号文件 (.dsymb文件)<br>应用程序文件 (appName.app文件，把IPA文件后缀改为zip，然后解压，Payload目录下的appName.app文件), 这里的appName是你的应用程序的名称。<br>把这3个文件放到同一个目录下，打开Xcode的Window菜单下的organizer，然后点击Devices tab，然后选中左边的Device Logs。<br>然后把.crash文件拖到Device Logs或者选择下面的import导入.crash文件。<br>这样你就可以看到crash的详细log了。<br>方法2 使用命令行工具symbolicatecrash<br>有时候Xcode不能够很好的符号化crash文件。我们这里介绍如何通过symbolicatecrash来手动符号化crash log。<br>在处理之前，请依然将“.app“, “.dSYM”和 “.crash”文件放到同一个目录下。现在打开终端(Terminal)然后输入如下的命令：<br>export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer<br>然后输入命令：<br>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/PrivateFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash appName.crash appName.app &gt; appName.log<br>现在，符号化的crash log就保存在appName.log中了。<br>方法3 使用命令行工具atos<br>如果你有多个“.ipa”文件，多个”.dSYMB”文件，你并不太确定到底“dSYMB”文件对应哪个”.ipa”文件，那么，这个方法就非常适合你。<br>特别当你的应用发布到多个渠道的时候，你需要对不同渠道的crash文件，写一个自动化的分析脚本的时候，这个方法就极其有用。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/06/iOS启动优化/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1387,139 +1511,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/shell脚本常用参数/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yida">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="益达的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/18/shell脚本常用参数/" itemprop="url">Untitled</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-18T23:27:01+08:00">
-                2018-04-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>shell的常用关键字</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">echo "shell 输出脚本名称及参数";</span><br><span class="line">echo "执行的脚本名: $0 ";</span><br><span class="line">echo "第一个参数： $1";</span><br><span class="line">echo "第二个参数： $2";</span><br><span class="line">echo "传递到脚本的参数 $#"</span><br><span class="line">echo "脚本运行的当前进程ID号 $$"</span><br><span class="line"></span><br><span class="line">以一个单字符串显示所有向脚本传递的参数。</span><br><span class="line">如"$*"用「"」括起来的情况、以"$1 $2 … $n"的形式输出所有参数。</span><br><span class="line">echo "-- \$* 演示 ---"</span><br><span class="line">for i in "$*"; do</span><br><span class="line">    echo $i</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//拼接字符串</span><br><span class="line">your_name="qinjx"</span><br><span class="line">greeting="hello, "$your_name" !"</span><br><span class="line">greeting_1="hello, $&#123;your_name&#125; !"</span><br><span class="line"></span><br><span class="line">//获取字符串的长度</span><br><span class="line">string="abcd" echo $&#123;#string&#125; #输出 4</span><br><span class="line"></span><br><span class="line">//提取字符串</span><br><span class="line">string="runoob is a great site"</span><br><span class="line">echo $&#123;string:1:4&#125; # 输出 unoo</span><br></pre></td></tr></table></figure>
-<p>数组的定义：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">array_name=(value0 value1 value2 value3)</span><br><span class="line"></span><br><span class="line">array_name[0]=value0</span><br><span class="line">array_name[1]=value1</span><br><span class="line">array_name[n]=valuen</span><br><span class="line"></span><br><span class="line">读取数组：</span><br><span class="line">$&#123;数组名[下标] valuen=$&#123;array_name[n]&#125;</span><br><span class="line">echo $&#123;array_name[@]&#125;  使用@符号可以获取数组中的所有元素</span><br><span class="line"></span><br><span class="line"># 取得数组元素的个数</span><br><span class="line">length=$&#123;#array_name[@]&#125;</span><br><span class="line"># 或者</span><br><span class="line">length=$&#123;#array_name[*]&#125;</span><br><span class="line"># 取得数组单个元素的长度</span><br><span class="line">lengthn=$&#123;#array_name[n]&#125;</span><br></pre></td></tr></table></figure></p>
-<p>expr<br>(1).”string : REGEX”字符串匹配示例。要输出匹配到的字符串结果，需要使用”(“和”)“，否则返回的将是匹配到的字符串数量。<br>(2).”index string chars”用法示例。<br>(3).”substr string pos len”用法示例。</p>
-<p>数字</p>
-<p>-eq    检测两个数是否相等，相等返回 true。<br>ne    检测两个数是否相等，不相等返回 true。    [ $a -ne $b ]<br>-gt    检测左边的数是否大于右边的，如果是，则返回 true。    [ $a -gt $b ]<br>-lt    检测左边的数是否小于右边的，如果是，则返回 true。    [ $a -lt $b ]<br>-ge    检测左边的数是否大于等于右边的，如果是，则返回 true。 [ $a -ge $b ]<br>-le    检测左边的数是否小于等于右边的，如果是，则返回 true。 [ $a -le $b ]</p>
-<p>if [ $a -eq $b ]<br>then<br>   echo “$a -eq $b : a 等于 b”<br>else<br>   echo “$a -eq $b: a 不等于 b”<br>fi</p>
-<p>!    非运算，表达式为 true 则返回 false，否则返回 true。    [ ! false ]<br>-o    或运算，有一个表达式为 true 则返回 true。    [ $a -lt 20 -o $b -gt 100 ]<br>-a    与运算，两个表达式都为 true 才返回 true。    [ $a -lt 20 -a $b -gt 100 ]</p>
-<p>&amp;&amp;    逻辑的 AND    [[ $a -lt 100 &amp;&amp; $b -gt 100 ]] 返回 false<br>||    逻辑的 OR    [[ $a -lt 100 || $b -gt 100 ]] 返回 true</p>
-<p>字符串：</p>
-<p>=    检测两个字符串是否相等，相等返回 true。    [ $a = $b ] 返回 false。<br>!=    检测两个字符串是否相等，不相等返回 true。    [ $a != $b ] 返回 true。<br>-z    检测字符串长度是否为0，为0返回 true。    [ -z $a ] 返回 false。<br>-n    检测字符串长度是否为0，不为0返回 true。    [ -n $a ] 返回 true。<br>str    检测字符串是否为空，不为空返回 true。    [ $a ] 返回 true。</p>
-<p>-b file    检测文件是否是块设备文件，如果是，则返回 true。    [ -b $file ]<br>-c file    检测文件是否是字符设备文件，如果是，则返回 true。    [ -c $file ]<br>-d file    检测文件是否是目录，如果是，则返回 true。    [ -d $file ]<br>-f file    检测文件是否是普通文件（既不是目录，也不是设备文件），如果是，则返回 true。    [ -f $file ] 返回 true。<br>-g file    检测文件是否设置了 SGID 位，如果是，则返回 true。    [ -g $file ] ]<br>-k file    检测文件是否设置了粘着位(Sticky Bit)，如果是，则返回 true。    [ -k $file ] 返回 false。<br>-p file    检测文件是否是有名管道，如果是，则返回 true。    [ -p $file ] 返回 false。<br>-u file    检测文件是否设置了 SUID 位，如果是，则返回 true。    [ -u $file ] 返回 false。<br>-r file    检测文件是否可读，如果是，则返回 true。    [ -r $file ] 返回 true。<br>-w file    检测文件是否可写，如果是，则返回 true。    [ -w $file ] 返回 true。<br>-x file    检测文件是否可执行，如果是，则返回 true。    [ -x $file ] 返回 true。<br>-s file    检测文件是否为空（文件大小是否大于0），不为空返回 true。    [ -s $file ] 返回 true。<br>-e file    检测文件（包括目录）是否存在，如果是，则返回 true。    [ -e $file ] 返回 true。</p>
-<p>//输出到文件<br>echo “It is a test” &gt; myfile<br>echo <code>date</code>输出时间</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1570,7 +1561,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
