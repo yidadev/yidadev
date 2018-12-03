@@ -229,139 +229,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/shell脚本常用参数/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yida">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="益达的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/18/shell脚本常用参数/" itemprop="url">Untitled</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-18T23:27:01+08:00">
-                2018-04-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>shell的常用关键字</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">echo "shell 输出脚本名称及参数";</span><br><span class="line">echo "执行的脚本名: $0 ";</span><br><span class="line">echo "第一个参数： $1";</span><br><span class="line">echo "第二个参数： $2";</span><br><span class="line">echo "传递到脚本的参数 $#"</span><br><span class="line">echo "脚本运行的当前进程ID号 $$"</span><br><span class="line"></span><br><span class="line">以一个单字符串显示所有向脚本传递的参数。</span><br><span class="line">如"$*"用「"」括起来的情况、以"$1 $2 … $n"的形式输出所有参数。</span><br><span class="line">echo "-- \$* 演示 ---"</span><br><span class="line">for i in "$*"; do</span><br><span class="line">    echo $i</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//拼接字符串</span><br><span class="line">your_name="qinjx"</span><br><span class="line">greeting="hello, "$your_name" !"</span><br><span class="line">greeting_1="hello, $&#123;your_name&#125; !"</span><br><span class="line"></span><br><span class="line">//获取字符串的长度</span><br><span class="line">string="abcd" echo $&#123;#string&#125; #输出 4</span><br><span class="line"></span><br><span class="line">//提取字符串</span><br><span class="line">string="runoob is a great site"</span><br><span class="line">echo $&#123;string:1:4&#125; # 输出 unoo</span><br></pre></td></tr></table></figure>
-<p>数组的定义：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">array_name=(value0 value1 value2 value3)</span><br><span class="line"></span><br><span class="line">array_name[0]=value0</span><br><span class="line">array_name[1]=value1</span><br><span class="line">array_name[n]=valuen</span><br><span class="line"></span><br><span class="line">读取数组：</span><br><span class="line">$&#123;数组名[下标] valuen=$&#123;array_name[n]&#125;</span><br><span class="line">echo $&#123;array_name[@]&#125;  使用@符号可以获取数组中的所有元素</span><br><span class="line"></span><br><span class="line"># 取得数组元素的个数</span><br><span class="line">length=$&#123;#array_name[@]&#125;</span><br><span class="line"># 或者</span><br><span class="line">length=$&#123;#array_name[*]&#125;</span><br><span class="line"># 取得数组单个元素的长度</span><br><span class="line">lengthn=$&#123;#array_name[n]&#125;</span><br></pre></td></tr></table></figure></p>
-<p>expr<br>(1).”string : REGEX”字符串匹配示例。要输出匹配到的字符串结果，需要使用”(“和”)“，否则返回的将是匹配到的字符串数量。<br>(2).”index string chars”用法示例。<br>(3).”substr string pos len”用法示例。</p>
-<p>数字</p>
-<p>-eq    检测两个数是否相等，相等返回 true。<br>ne    检测两个数是否相等，不相等返回 true。    [ $a -ne $b ]<br>-gt    检测左边的数是否大于右边的，如果是，则返回 true。    [ $a -gt $b ]<br>-lt    检测左边的数是否小于右边的，如果是，则返回 true。    [ $a -lt $b ]<br>-ge    检测左边的数是否大于等于右边的，如果是，则返回 true。 [ $a -ge $b ]<br>-le    检测左边的数是否小于等于右边的，如果是，则返回 true。 [ $a -le $b ]</p>
-<p>if [ $a -eq $b ]<br>then<br>   echo “$a -eq $b : a 等于 b”<br>else<br>   echo “$a -eq $b: a 不等于 b”<br>fi</p>
-<p>!    非运算，表达式为 true 则返回 false，否则返回 true。    [ ! false ]<br>-o    或运算，有一个表达式为 true 则返回 true。    [ $a -lt 20 -o $b -gt 100 ]<br>-a    与运算，两个表达式都为 true 才返回 true。    [ $a -lt 20 -a $b -gt 100 ]</p>
-<p>&amp;&amp;    逻辑的 AND    [[ $a -lt 100 &amp;&amp; $b -gt 100 ]] 返回 false<br>||    逻辑的 OR    [[ $a -lt 100 || $b -gt 100 ]] 返回 true</p>
-<p>字符串：</p>
-<p>=    检测两个字符串是否相等，相等返回 true。    [ $a = $b ] 返回 false。<br>!=    检测两个字符串是否相等，不相等返回 true。    [ $a != $b ] 返回 true。<br>-z    检测字符串长度是否为0，为0返回 true。    [ -z $a ] 返回 false。<br>-n    检测字符串长度是否为0，不为0返回 true。    [ -n $a ] 返回 true。<br>str    检测字符串是否为空，不为空返回 true。    [ $a ] 返回 true。</p>
-<p>-b file    检测文件是否是块设备文件，如果是，则返回 true。    [ -b $file ]<br>-c file    检测文件是否是字符设备文件，如果是，则返回 true。    [ -c $file ]<br>-d file    检测文件是否是目录，如果是，则返回 true。    [ -d $file ]<br>-f file    检测文件是否是普通文件（既不是目录，也不是设备文件），如果是，则返回 true。    [ -f $file ] 返回 true。<br>-g file    检测文件是否设置了 SGID 位，如果是，则返回 true。    [ -g $file ] ]<br>-k file    检测文件是否设置了粘着位(Sticky Bit)，如果是，则返回 true。    [ -k $file ] 返回 false。<br>-p file    检测文件是否是有名管道，如果是，则返回 true。    [ -p $file ] 返回 false。<br>-u file    检测文件是否设置了 SUID 位，如果是，则返回 true。    [ -u $file ] 返回 false。<br>-r file    检测文件是否可读，如果是，则返回 true。    [ -r $file ] 返回 true。<br>-w file    检测文件是否可写，如果是，则返回 true。    [ -w $file ] 返回 true。<br>-x file    检测文件是否可执行，如果是，则返回 true。    [ -x $file ] 返回 true。<br>-s file    检测文件是否为空（文件大小是否大于0），不为空返回 true。    [ -s $file ] 返回 true。<br>-e file    检测文件（包括目录）是否存在，如果是，则返回 true。    [ -e $file ] 返回 true。</p>
-<p>//输出到文件<br>echo “It is a test” &gt; myfile<br>echo <code>date</code>输出时间</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/flexBox布局/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1625,6 +1492,138 @@
 <p>Runloop的工作原理</p>
 <p>内存管理</p>
 <p>block</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/javaCore的说明/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yida">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="益达的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/18/javaCore的说明/" itemprop="url">Untitled</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-18T19:56:16+08:00">
+                2018-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="关于javaCore"><a href="#关于javaCore" class="headerlink" title="关于javaCore"></a>关于javaCore</h3><p>一个JSVirtualMachine的实例就是一个完整独立的JavaScript的执行环境，为JavaScript的执行提供底层资源。</p>
+<p>这个类主要用来做两件事情：</p>
+<p>实现并发的JavaScript执行<br>JavaScript和Objective-C桥接对象的内存管理</p>
+<p>每一个JavaScript上下文（JSContext对象）都归属于一个虚拟机（JSVirtualMachine）。每个虚拟机可以包含多个不同的上下文，并允许在这些不同的上下文之间传值（JSValue对象）。</p>
+<p>然而，每个虚拟机都是完整且独立的，有其独立的堆空间和垃圾回收器（garbage collector ），GC无法处理别的虚拟机堆中的对象，因此你不能把一个虚拟机中创建的值传给另一个虚拟机。</p>
+<p>线程和JavaScript的并发执行</p>
+<p>JavaScriptCore API都是线程安全的。你可以在任意线程创建JSValue或者执行JS代码，然而，所有其他想要使用该虚拟机的线程都要等待。</p>
+<p>如果想并发执行JS，需要使用多个不同的虚拟机来实现。<br>可以在子线程中执行JS代码。</p>
+<p>三个线程分别异步执行每秒1次的js log，首先会休眠1秒。</p>
+<p>在context上执行一个休眠5秒的JS函数。</p>
+<p>首先执行的应该是休眠5秒的JS函数，在此期间，context所处的虚拟机上的其他调用都会处于等待状态，因此tick和tick_2在前5秒都不会有执行。</p>
+<p>而context1所处的虚拟机仍然可以正常执行tick_1。</p>
+<p>休眠5秒结束后，tick和tick_2才会开始执行（不保证先后顺序）</p>
 
           
         
