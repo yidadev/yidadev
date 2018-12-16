@@ -229,7 +229,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/05/数据存储问题20180205/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/02/20180112runtime机制/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yida">
@@ -248,7 +248,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/05/数据存储问题20180205/" itemprop="url">图片 存储设计</a></h1>
+                <a class="post-title-link" href="/2018/01/02/20180112runtime机制/" itemprop="url">Runtime基础考点</a></h1>
         
 
         <div class="post-meta">
@@ -260,8 +260,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-05T10:11:12+08:00">
-                2018-02-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-02T10:11:12+08:00">
+                2018-01-02
               </time>
             
 
@@ -300,35 +300,22 @@
       
         
           
-            <p>为了设计一个比较好的磁盘缓存，我调查了大量的开源库，包括 TMDiskCache、PINDiskCache、SDWebImage、FastImageCache 等，也调查了一些闭源的实现，包括 NSURLCache、Facebook 的 FBDiskCache 等。他们的实现技术大致分为三类：基于文件读写、基于 mmap 文件内存映射、基于数据库。</p>
-<p>TMDiskCache, PINDiskCache, SDWebImage 等缓存，都是基于文件系统的，即一个 Value 对应一个文件，通过文件读写来缓存数据。他们的实现都比较简单，性能也都相近，缺点也是同样的：不方便扩展、没有元数据、难以实现较好的淘汰算法、数据统计缓慢。</p>
-<p>FastImageCache 采用的是 mmap 将文件映射到内存。用过 MongoDB 的人应该很熟悉 mmap 的缺陷：热数据的文件不要超过物理内存大小，不然 mmap 会导致内存交换严重降低性能；另外内存中的数据是定时 flush 到文件的，如果数据还未同步时程序挂掉，就会导致数据错误。抛开这些缺陷来说，mmap 性能非常高。</p>
-<p>NSURLCache、FBDiskCache 都是基于 SQLite 数据库的。基于数据库的缓存可以很好的支持元数据、扩展方便、数据统计速度快，也很容易实现 LRU 或其他淘汰算法，唯一不确定的就是数据库读写的性能，为此我评测了一下 SQLite 在真机上的表现。iPhone 6 64G 下，SQLite 写入性能比直接写文件要高，但读取性能取决于数据大小：当单条数据小于 20K 时，数据越小 SQLite 读取性能越高；单条数据大于 20K 时，直接写为文件速度会更快一些。这和 SQLite 官网的描述基本一致。另外，直接从官网下载最新的 SQLite 源码编译，会比 iOS 系统自带的 sqlite3.dylib 性能要高很多。基于 SQLite 的这种表现，磁盘缓存最好是把 SQLite 和文件存储结合起来：key-value 元数据保存在 SQLite 中，而 value 数据则根据大小不同选择 SQLite 或文件存储。NSURLCache 选定的数据大小的阈值是 16K；FBDiskCache 则把所有 value 数据都保存成了文件。</p>
-<p>我的 YYDiskCache 也是采用的 SQLite 配合文件的存储方式，在 iPhone 6 64G 上的性能基准测试结果见下图。在存取小数据 (NSNumber) 时，YYDiskCache 的性能远远高出基于文件存储的库；而较大数据的存取性能则比较接近了。但得益于 SQLite 存储的元数据，YYDiskCache 实现了 LRU 淘汰算法、更快的数据统计，更多的容量控制选项。</p>
-<p>TM的研究背景资源。</p>
-<p>TMCache做了一个线程安全的存储方式，区分两种缓存方式，一种Memory的存储方式，一种是Disk的存储方式。</p>
-<p>存储过程中出现的:</p>
-<p>PINCache的设计思路：</p>
-<p>关于AF中的图片存储：</p>
-<p>AF中提供了类AFImageDownloadReceipt来监控图片的下载情况，一个是sessionDataTask的，一个唯一区别receptionID来区分，</p>
-<p>下载过程中:<br>在一个同步队列中同步执行下载操作，先判断这个task是不是存在mergeTask中，如果存在，直接把handler加到对应的task中，等数据下载完成，回调所有的handler执行对应的回调代码，然后显示图片….然后根据网络请求的缓存策略来判断，这个图片有没有被缓存，如果缓存了，直接使用缓存过的代码，如果没有缓存，继续到下载逻辑。</p>
-<p>现在是一个SessionDataTask，用于请求的下载，然后返回数据针对responseQueue进行回调给之前的block中，如果发现task是mergeTask，返回的同时，需要先清除mergeTask任务，然后回调到指定的回调函数中，然后同步去掉当前统计的任务数量，如果发现当前任务还有未完成的任务，直接找到，遍历task中的所有任务，一旦是遇到挂起的任务 就开始对任务进行resume。</p>
-<table>
-<thead>
-<tr>
-<th>内存</th>
-<th>消费的时间</th>
-<th>性能消耗</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AF的图片下载策略</td>
-<td>23s</td>
-<td>233</td>
-</tr>
-</tbody>
-</table>
+            <p>1.关于底层的属性说明<br>属性和成员变量不同，<br>@property = ivar + getter  + setter；<br>定义的property会在objc_ivar_list中添加一个成员变量的描述，然后再methodList中添加setter和getter方法，objc_property_t是声明的属性类型，是一个指向objc_property结构体指针；</p>
+<p>总结：<br>object_property_t * propertyList = class_copyPropertyList(class, &amp;count);<br>foreach就可以查询所有的property的数据信息</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">typedef struct &#123;</span><br><span class="line">    const char * _Nonnull name;           /**<span class="tag">&lt; <span class="attr">The</span> <span class="attr">name</span> <span class="attr">of</span> <span class="attr">the</span> <span class="attr">attribute</span> */</span></span><br><span class="line">    const char * _Nonnull value;          /**&lt; The value of the attribute (usually empty) */</span><br><span class="line">&#125; objc_property_attribute_t;</span><br></pre></td></tr></table></figure>
+<p>成员变量<br>Ivar的实例变量类型，是一个指向objc_ivar的结构体的指针<br>typedef struct objc_ivar *ivar;<br>结构体指针的组成如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- struct objc_ivar &#123;</span><br><span class="line">    char * _Nullable ivar_name;</span><br><span class="line">    char * _Nullable ivar_type;</span><br><span class="line">    int ivar_offset;基地址的偏移量</span><br><span class="line">#ifdef __LP64__</span><br><span class="line">    int space;</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>获取整个成员变量列表<br>Ivar <em>class_copyIvarList（Class cls, unsigned int </em>outCount）;<br>我们可以直接通过 ivar_getName(ivar);<br>ivar_getTypeEncoding(ivar);<br>释放指针，<br>注意的一些细节点是：记得释放free(ivars);</p>
+<p>定义成员变量的列表；<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">在objc_class中，所有的成员变量，属性的信息是放在链表ivars中的，ivars是一个数组，数组中的每个元素指向Ivar变量指针的地址。</span><br><span class="line">struct objc_ivar_list &#123;</span><br><span class="line">    int ivar_count；</span><br><span class="line">#ifdef __LP64__</span><br><span class="line">    int space；</span><br><span class="line">#endif</span><br><span class="line">    /* variable length structure */</span><br><span class="line">    struct objc_ivar ivar_list[1]；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>关于存储objc_method的记录<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct objc_method &#123;</span><br><span class="line">    SEL _Nonnull method_name;</span><br><span class="line">    char * _Nullable method_types; 存储方法的参数类类和返回值类型</span><br><span class="line">    IMP _Nonnull method_imp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>关于selector的定义，其实底层并没有这个定义；；从相对的总结可以看出，selector其实就是一个char类型的指针；</p>
+<p>关于IMP：就是函数指针 ，指向方法实现的首地址<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/// A pointer to the function of a method implementation.</span><br><span class="line">#if !OBJC_OLD_DISPATCH_PROTOTYPES</span><br><span class="line">typedef void (*IMP)(void /* id, SEL, ... */ );</span><br><span class="line">#else</span><br><span class="line">typedef id _Nullable (*IMP)(id _Nonnull, SEL _Nonnull, ...);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct objc_cache &#123;</span><br><span class="line">    unsigned int mask /* total = mask + 1 */  ;</span><br><span class="line">    一个整数，指定分配的缓存bucket的总数。在方法查找过程中，Objective-C runtime使用这个字段来确定开始线性查找数组的索引位置。指向方法selector的指针与该字段做一个AND位操作(index = (mask &amp; selector))。这可以作为一个简单的hash散列算法</span><br><span class="line">    unsigned int occupied;一个整数，指定实际占用的缓存bucket的总数。</span><br><span class="line">    Method _Nullable buckets[1];指向Method数据结构指针的数组。这个数组可能包含不超过mask+1个元素。需要注意的是，指针可能是NULL，表示这个缓存bucket没有被占用，另外被占用的bucket可能是不连续的。这个数组可能会随着时间而增长。</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">objc_protocol_list</span><br><span class="line">struct objc_protocol_list &#123;</span><br><span class="line">    struct objc_protocol_list * _Nullable next;</span><br><span class="line">    long count;</span><br><span class="line">    __unsafe_unretained Protocol * _Nullable list[1];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>方法调用的api<br>方法调用流程<br>检查 selector 是否需要忽略<br>检查 target 是否为 nil，如果是 nil 就直接 cleanup，然后 return<br>在 target 的 Class 中根据 selector 去找 IMP</p>
+<p>寻找 IMP 的过程:<br>在当前 class 的方法缓存里寻找（cache methodLists）<br>找到了跳到对应的方法实现，没找到继续往下执行<br>从当前 class 的 方法列表里查找（methodLists），找到了添加到缓存列表里，然后跳转到对应的方法实现；没找到继续往下执行<br>从 superClass 的缓存列表和方法列表里查找，直到找到基类为止<br>以上步骤还找不到 IMP，则进入消息动态处理和消息转发流程</p>
+<p>runtime的api的使用：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">//获取属性列表</span><br><span class="line">objc_property_t *propertyList = class_copyPropertyList([self class], &amp;count);</span><br><span class="line">//获取方法列表</span><br><span class="line">Method *methodList = class_copyMethodList([self class], &amp;count);</span><br><span class="line">//获取成员列表</span><br><span class="line">Ivar *ivarList = class_copyIvarList([self class], &amp;count);</span><br><span class="line">//获取协议列表</span><br><span class="line">__unsafe_unretained Protocol **protocolList = class_copyProtocolList([self class], &amp;count);</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">动态创建类</span><br><span class="line">Class cls = objc_allocateClassPair(MyClass.class, &quot;MySubClass&quot;, 0);</span><br><span class="line">class_addMethod(cls, @selector(submethod1), (IMP)imp_submethod1, &quot;v@:&quot;);</span><br><span class="line">class_replaceMethod(cls, @selector(method1), (IMP)imp_submethod1, &quot;v@:&quot;);</span><br><span class="line">class_addIvar(cls, &quot;_ivar1&quot;, sizeof(NSString *), log(sizeof(NSString *)), &quot;i&quot;);</span><br><span class="line"></span><br><span class="line">objc_property_attribute_t type = &#123;&quot;T&quot;, &quot;@&quot;NSString&quot;&quot;&#125;;</span><br><span class="line">objc_property_attribute_t ownership = &#123; &quot;C&quot;, &quot;&quot; &#125;;</span><br><span class="line">objc_property_attribute_t backingivar = &#123; &quot;V&quot;, &quot;_ivar1&quot;&#125;;</span><br><span class="line">objc_property_attribute_t attrs[] = &#123;type, ownership, backingivar&#125;;</span><br><span class="line"></span><br><span class="line">class_addProperty(cls, &quot;property2&quot;, attrs, 3);</span><br><span class="line">objc_registerClassPair(cls);</span><br><span class="line"></span><br><span class="line">id instance = [[cls alloc] init];</span><br><span class="line">[instance performSelector:@selector(submethod1)];</span><br><span class="line">[instance performSelector:@selector(method1)];</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">转化关系</span><br><span class="line">id obj = [[NSObject alloc] init];</span><br><span class="line">void *p = (__bridge void *)obj;</span><br><span class="line">id o = (__bridge id)p;</span><br><span class="line"></span><br><span class="line">关于这个转换可以了解更多：ARC 类型转换：显示转换 id 和 void *</span><br></pre></td></tr></table></figure>
 
           
         
@@ -377,7 +364,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/22/线程锁20180122/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/01/20180101修饰关键字/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yida">
@@ -396,7 +383,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/22/线程锁20180122/" itemprop="url">iOS 锁机制</a></h1>
+                <a class="post-title-link" href="/2018/01/01/20180101修饰关键字/" itemprop="url">iOS常用的修饰关键字</a></h1>
         
 
         <div class="post-meta">
@@ -408,317 +395,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-22T10:11:12+08:00">
-                2018-01-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>关于Lock的问题：</p>
-<p>各种锁的性能对比： 性能从最优到最差：osspinLock -&gt; dispatch_semaphore -&gt; pthread_mutex -&gt; NSLock -&gt; NSCondition -&gt; pthread_metex(recursive) -&gt; NSRecursiveLock -&gt; NSConditionLock -&gt; @synchronized.</p>
-<p>依次从性能最优到性能最差:</p>
-<h3 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h3><p>关于OSSpinLock，关于自旋锁的问题：</p>
-<p>开发者保证访问锁的线程全部都处于同一优先级，否则 iOS 系统中所有类型的自旋锁都不能再使用了。</p>
-<p>为什么说 OSSpinLock是不安全的，新版iOS中维护了5个不同线程优先级， background , utility , default , user-initiated , user-interactive，高优先级始终会在低优先级前执行，一个线程不会受到比他更低优先级线程的干扰，这种线程调度算法会产生潜在的优先级反转问题，，从而破坏了spin lock。<br>具体来说，如果一个低优先级的线程获得锁并访问共享资源，这时一个高优先级的线程也尝试获得这个锁，它会处于spin lock的忙等待从而占用大量的CPU，此时低优先级线程与高优先级线程争夺CPU时间，从而导致任务迟迟完不成，无法释放lock。</p>
-<p>解决方案： 使用hand off lock 算法， 锁的持有者会把线程ID保存到锁的内部，锁的等待者会临时贡献出它的优先级来避免优先级翻转的问题，理论上这种模式会比较复杂的多锁条件下产生问题，但实践上目前还一切都好。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">自己实现这一套，目前没有发现有异常，即便创建的队列处于不同等级，暂时没出现自选锁引发的问题。</span><br><span class="line"></span><br><span class="line">   dispatch_queue_t queue2 = dispatch_get_global_queue(QOS_CLASS_UTILITY, 0);</span><br><span class="line">    //低优先级队列</span><br><span class="line">    dispatch_queue_t queue3 = dispatch_get_global_queue(QOS_CLASS_BACKGROUND, 0);</span><br><span class="line">    //init的初始化的信息</span><br><span class="line">    __block OSSpinLock pinLock = OS_SPINLOCK_INIT;</span><br><span class="line">    dispatch_async(queue2, ^&#123;</span><br><span class="line">        NSLog(@"线程2 准备上锁");</span><br><span class="line">        OSSpinLockLock(&amp;pinLock);</span><br><span class="line">        sleep(4);</span><br><span class="line">        NSLog(@"线程2");</span><br><span class="line">        OSSpinLockUnlock(&amp;pinLock);</span><br><span class="line">        NSLog(@"线程2 解锁成功 --------");</span><br><span class="line">    &#125;);</span><br><span class="line">    dispatch_async(queue3, ^&#123;</span><br><span class="line">        NSLog(@"线程3 准备上锁");</span><br><span class="line">        OSSpinLockLock(&amp;pinLock);</span><br><span class="line">        sleep(4);</span><br><span class="line">        NSLog(@"线程3");</span><br><span class="line">        OSSpinLockUnlock(&amp;pinLock);</span><br><span class="line">        NSLog(@"线程3 解锁成功 ---------");</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="信号量："><a href="#信号量：" class="headerlink" title="信号量："></a>信号量：</h3><p>dispatch_semaphore_t GCD中信号量，也可以解决资源抢占问题,支持信号通知和信号等待。每当发送一个信号通知，则信号量+1；每当发送一个等待信号时信号量-1,如果信号量为0则信号会处于等待状态，直到信号量大于0开始执行.</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">创建信号量: 创建一个信号量为1的信号。</span><br><span class="line">dispatch_semaphore_t semaphore = dispatch_semaphore_create(1);</span><br><span class="line">//DISPATCH_TIME_FOREVER等待时间，wait之后信号量-1，为0</span><br><span class="line">dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</span><br><span class="line">发送一个信号量，这时候信号量是1。</span><br><span class="line">//发送一个信号量，这时候信号量+1，为1</span><br><span class="line">dispatch_semaphore_signal(semaphore);</span><br></pre></td></tr></table></figure>
-<p>可以通过信号量的方式，创建信号量，设置初始值是1，每次发请求前做下wait，知道请求数据回来，做一次signal，然后再次做第一个请求的发送，这样可以实现一个串行的数据队列。</p>
-<p>关于信号量的使用，产生的互斥锁<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">dispatch_semaphore_t semaphore  = dispatch_semaphore_create(1);</span><br><span class="line">dispatch_queue_t queue =  dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);</span><br><span class="line">     NSLog(@"执行操作0----------");</span><br><span class="line">    dispatch_async(queue, ^&#123;</span><br><span class="line">        //执行的顺讯</span><br><span class="line">        dispatch_wait(semaphore, DISPATCH_TIME_FOREVER);</span><br><span class="line">        NSLog(@"开始发送请求A-----");</span><br><span class="line">        dispatch_after(dispatch_time(DISPATCH_TIME_NOW,</span><br><span class="line">                                     (int64_t)(4 * NSEC_PER_SEC)),</span><br><span class="line">                       dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                           NSLog(@"请求A数据收集-----");</span><br><span class="line">                           dispatch_semaphore_signal(semaphore);</span><br><span class="line">                           NSLog(@"根据数据绘制-A-的UI");</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">dispatch_async(queue, ^&#123;</span><br><span class="line">        dispatch_wait(semaphore, DISPATCH_TIME_FOREVER);</span><br><span class="line">        NSLog(@"开始发送请求B-----");</span><br><span class="line">        dispatch_after(dispatch_time(DISPATCH_TIME_NOW,</span><br><span class="line">                                     (int64_t)(4 * NSEC_PER_SEC)),</span><br><span class="line">                       dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                           NSLog(@"请求B数据收集-----");</span><br><span class="line">                           dispatch_semaphore_signal(semaphore);</span><br><span class="line">                           NSLog(@"根据数据绘制-B-的UI");</span><br><span class="line">                       &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">dispatch_async(queue, ^&#123;</span><br><span class="line">        dispatch_wait(semaphore, DISPATCH_TIME_FOREVER);</span><br><span class="line">        NSLog(@"开始发送请求C-----");</span><br><span class="line">        dispatch_after(dispatch_time(DISPATCH_TIME_NOW,</span><br><span class="line">                                     (int64_t)(4 * NSEC_PER_SEC)),</span><br><span class="line">                       dispatch_get_main_queue(), ^&#123;</span><br><span class="line">                           NSLog(@"请求C数据收集-----");</span><br><span class="line">                           dispatch_semaphore_signal(semaphore);</span><br><span class="line">                           NSLog(@"根据数据绘制-C-的UI");</span><br><span class="line">                       &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">    NSLog(@"开始绘制UI");</span><br><span class="line">    最终生成的结果：0 -&gt; 主线程UI绘制 -&gt; 请求 A -&gt; A 数据 -&gt; A UI -&gt; 请求 B -&gt; B 数据 -&gt; B UI -&gt; 请求 C -&gt; C 数据 -&gt; C UI</span><br></pre></td></tr></table></figure></p>
-<h3 id="pthread-mutex"><a href="#pthread-mutex" class="headerlink" title="pthread_mutex"></a>pthread_mutex</h3><p>互斥量表现互斥线上的数据结构，也被当做二元信号灯。常用作保护从中断来的临界段代码并且在共享同步使用的资源。</p>
-<p>mutex(互斥量) 本质说就是一把锁，提供对资源的独占访问，所以Mutex主要的作用是用户互斥。 Mutex对象值，只有0和1两个值，这两个值分别代表了Mutex的两种状态，值是0，表示锁定的状态，当前对象被锁定，用户进程/线程如果试图lock临界资源，则进入排队等待；值为1，表示空闲状态，当前对象为空闲，用户进程/线程可以lock临界资源，之后Mutex值减1变为0.</p>
-<p>mutex的几个操作，主要集中在<br>创建： pthread_mutex_init,创建有初始值，锁定状态处于空闲状态<br>加锁： pthread_mutex_lock<br>解锁： pthread_mutex_unlock<br>销毁： pthread_mutex_destory</p>
-<h5 id="信号量和互斥量之前的区别："><a href="#信号量和互斥量之前的区别：" class="headerlink" title="信号量和互斥量之前的区别："></a>信号量和互斥量之前的区别：</h5><p>信号量用于多线程任务同步的，一个线程完成了某一个动作就通过信号量告诉别的线层，别的线程再进行某些动作（大家都在semtake的时候，就阻塞在哪里了）；<br>互斥锁是用在多线程多任务互斥的，一个线程占用了某一个线程资源，那么别的线程就无法访问，直到这个线程unlock，其他的线程才开始可以利用资源。</p>
-<p>信号量不一定是锁定某一个资源，而是流程上的概念，比如：有A,B两个线程，B线程要等A线程完成某一任务以后再进行自己下面的步骤，这个任务 并不一定是锁定某一资源，还可以是进行一些计算或者数据处理之类。<br>线程互斥量则是“锁住某一资源”的概念，在锁定期间内，其他线程无法对被保护的数据进 行操作。在有些情况下两者可以互换。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">dispatch_queue_t queue =  dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0);</span><br><span class="line">   __block pthread_mutex_t mutex;</span><br><span class="line">   //进行初始化操作，</span><br><span class="line">   pthread_mutex_init(&amp;mutex,NULL);</span><br><span class="line">   dispatch_async(queue, ^&#123;</span><br><span class="line">       pthread_mutex_lock(&amp;mutex);</span><br><span class="line">       NSLog(@"发送请求A---");</span><br><span class="line">       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</span><br><span class="line">           NSLog(@"处理数据A---");</span><br><span class="line">           pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">           NSLog(@"绘制数据A对应的UI---");</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;);</span><br><span class="line">   dispatch_async(queue, ^&#123;</span><br><span class="line">       pthread_mutex_lock(&amp;mutex);</span><br><span class="line">       NSLog(@"发送请求B---");</span><br><span class="line">       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</span><br><span class="line">           NSLog(@"处理数据B---");</span><br><span class="line">           pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">           NSLog(@"绘制数据B对应的UI---");</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;);</span><br><span class="line">   dispatch_async(queue, ^&#123;</span><br><span class="line">       pthread_mutex_lock(&amp;mutex);</span><br><span class="line">       NSLog(@"发送请求C---");</span><br><span class="line">       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</span><br><span class="line">           NSLog(@"处理数据C---");</span><br><span class="line">           pthread_mutex_unlock(&amp;mutex);</span><br><span class="line">           NSLog(@"绘制数据C对应的UI---");</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="NSLock"><a href="#NSLock" class="headerlink" title="NSLock"></a>NSLock</h3><p>NSLock 在程序中实现一个简单的互斥锁，实现了NSLockingProtocol的协议。<br>lock进行加锁，unlock进行解锁，trylock尝试加锁，如果失败了，并不会阻塞线程，只是立即返回。<br>使用tryLock并不能成功加锁，如果获取锁失败就不会执行加锁代码了。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">NSLock *lock = [[NSLock alloc] init];</span><br><span class="line">   dispatch_queue_t queue = dispatch_get_global_queue(QOS_CLASS_USER_INTERACTIVE, 0);</span><br><span class="line">   dispatch_async(queue, ^&#123;</span><br><span class="line">       NSLog(@"执行A begin-----");</span><br><span class="line">       [lock lock];</span><br><span class="line">       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</span><br><span class="line">           NSLog(@"执行A操作-------");</span><br><span class="line">           [lock unlock];</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;);</span><br><span class="line">   dispatch_async(queue, ^&#123;</span><br><span class="line">       NSLog(@"执行B begin-----");</span><br><span class="line">       [lock lock];</span><br><span class="line">       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</span><br><span class="line">           NSLog(@"执行B操作-------");</span><br><span class="line">           [lock unlock];</span><br><span class="line">       &#125;);</span><br><span class="line">   &#125;);</span><br><span class="line">   执行的顺序是不确定的。</span><br></pre></td></tr></table></figure></p>
-<h3 id="NSCondition"><a href="#NSCondition" class="headerlink" title="NSCondition"></a>NSCondition</h3><p>条件锁：NSCondition，同样实现了NSLocking的协议</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">NSCondition *cLock = [NSCondition new];</span><br><span class="line"></span><br><span class="line">常见的API</span><br><span class="line">wait: 进入等待状态</span><br><span class="line">waitUntilDate：让一个线程等待一定的时间</span><br><span class="line">signal: 唤醒一个等待的线程</span><br><span class="line">broadcast: 唤醒所有等待的线程</span><br><span class="line">//线程1</span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    NSLog(@"start");</span><br><span class="line">    [cLock lock];</span><br><span class="line">    [cLock waitUntilDate:[NSDate dateWithTimeIntervalSinceNow:2]];</span><br><span class="line">    NSLog(@"线程1");</span><br><span class="line">    [cLock unlock];</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//唤醒某个等待的线程</span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    [cLock lock];</span><br><span class="line">    NSLog(@"线程2加锁成功");</span><br><span class="line">    [cLock wait];</span><br><span class="line">    NSLog(@"线程2");</span><br><span class="line">    [cLock unlock];</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    sleep(2);</span><br><span class="line">    NSLog(@"唤醒一个等待的线程");</span><br><span class="line">    [cLock signal];</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//唤醒所有等待的线程</span><br><span class="line">dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">    sleep(2);</span><br><span class="line">    NSLog(@"唤醒所有等待的线程");</span><br><span class="line">    [cLock broadcast];</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="pthread-mutex-recursive"><a href="#pthread-mutex-recursive" class="headerlink" title="pthread_mutex(recursive)"></a>pthread_mutex(recursive)</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">/递归锁</span><br><span class="line">    static pthread_mutex_t pLock;</span><br><span class="line">    /*</span><br><span class="line">    pthread_mutexattr_t attr;</span><br><span class="line">    pthread_mutexattr_init(&amp;attr); //初始化attr并且给它赋予默认</span><br><span class="line">    //设置锁类型，这边是设置为递归锁,普通的锁，递归锁</span><br><span class="line">    pthread_mutexattr_settype(&amp;attr, PTHREAD_MUTEX_RECURSIVE);</span><br><span class="line">    pthread_mutex_init(&amp;pLock, &amp;attr);</span><br><span class="line">    pthread_mutexattr_destroy(&amp;attr); //销毁一个属性对象，在重新进行初始化之前该结构不能重新使用</span><br><span class="line">     */</span><br><span class="line">    //线程1</span><br><span class="line">    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^&#123;</span><br><span class="line">        static void (^RecursiveBlock)(int);</span><br><span class="line">        RecursiveBlock = ^(int value) &#123;</span><br><span class="line">            pthread_mutex_lock(&amp;pLock);</span><br><span class="line">            if (value &gt; 0) &#123;</span><br><span class="line">                NSLog(@"value: %d", value);</span><br><span class="line">                RecursiveBlock(value - 1);</span><br><span class="line">            &#125;</span><br><span class="line">            pthread_mutex_unlock(&amp;pLock);</span><br><span class="line">        &#125;;</span><br><span class="line">        RecursiveBlock(5);</span><br><span class="line">    &#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="NSRecursiveLock"><a href="#NSRecursiveLock" class="headerlink" title="NSRecursiveLock"></a>NSRecursiveLock</h3><p>NSRecursiveLock类定义的锁可以在同一线程多次lock，而不会造成死锁。递归锁会跟踪它被多少次lock。每次成功的lock都必须平衡调用unlock操作。只有所有的锁住和解锁操作都平衡的时候，锁才真正被释放给其他线程获得.可以得出结论： 加锁后，只能有一个线程进行访问该对象，后面的线程需需要进行排队，并且lock和unlock是对应出现的，同一个线程多次lock是不被允许的，而递归锁允许同一个线程在未释放锁时反复对该锁进行加锁操作。</p>
-<h3 id="NSConditionLock"><a href="#NSConditionLock" class="headerlink" title="NSConditionLock"></a>NSConditionLock</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">//主线程中</span><br><span class="line">    NSConditionLock *theLock = [[NSConditionLock alloc] init];</span><br><span class="line">    dispatch_async(self.concurrentQueue, ^&#123;</span><br><span class="line">        for (int i=0;i<span class="tag">&lt;<span class="name">=3;i++)</span> &#123;</span></span><br><span class="line"><span class="tag">            [<span class="attr">theLock</span> <span class="attr">lock</span>];</span></span><br><span class="line"><span class="tag">            <span class="attr">NSLog</span>(@"<span class="attr">thread1:</span>%<span class="attr">d</span>",<span class="attr">i</span>);</span></span><br><span class="line"><span class="tag">            <span class="attr">sleep</span>(<span class="attr">1</span>);</span></span><br><span class="line"><span class="tag">            [<span class="attr">theLock</span> <span class="attr">unlockWithCondition:i</span>];</span></span><br><span class="line"><span class="tag">        &#125;</span></span><br><span class="line"><span class="tag">    &#125;);</span></span><br><span class="line"><span class="tag">    <span class="attr">dispatch_async</span>(<span class="attr">self.concurrentQueue</span>, ^&#123;</span></span><br><span class="line"><span class="tag">        [<span class="attr">theLock</span> <span class="attr">lockWhenCondition:2</span>];</span></span><br><span class="line"><span class="tag">        <span class="attr">NSLog</span>(@"<span class="attr">thread2</span>");</span></span><br><span class="line"><span class="tag">        [<span class="attr">theLock</span> <span class="attr">unlock</span>];</span></span><br><span class="line"><span class="tag">    &#125;);</span></span><br><span class="line"><span class="tag">输出的结果： <span class="attr">thread1:0</span> <span class="attr">-</span>&gt;</span> thread1:1  -&gt; thread1:2 -&gt; thread2 -&gt; thread1:3</span><br></pre></td></tr></table></figure>
-<p>NSConditionLock也跟其它的锁一样，是需要lock与unlock对应的，只是lock,lockWhenCondition:与unlock，unlockWithCondition:是可以随意组合的，当然这是与你的需求相关的。</p>
-<h3 id="Synchronized"><a href="#Synchronized" class="headerlink" title="Synchronized"></a>Synchronized</h3><p>synchronized最基础的同步锁，关键字加锁，互斥锁，性能较差，不推荐使用。<br>1.加锁的代码量尽量少，<br>2.添加的OC对象必须在多个线程中都是同一对象<br>3.优点是不需要显示的创建锁对象，便可以实现锁的机制<br>4.这个同步锁，会隐式的添加一个异常处理历程来保护代码，该处理例程会在异常抛出的时候自动的释放互斥锁。</p>
-<p>我们之前用到了做多加锁方式是： @synchronized代码块。直接进行整块的加锁。</p>
-<h3 id="锁的性能的排序"><a href="#锁的性能的排序" class="headerlink" title="锁的性能的排序"></a>锁的性能的排序</h3><p><img src="http://images.bestswifter.com/lock_benchmark.png" alt=""></p>
-<p>可以看到的是，目前来说自旋锁（OSSPinLock）的性能是最好的，我们常用的synchronized的性能是最差的；</p>
-<h3 id="OSSPinLock（自旋锁）"><a href="#OSSPinLock（自旋锁）" class="headerlink" title="OSSPinLock（自旋锁）"></a>OSSPinLock（自旋锁）</h3><p>上述文章中已经介绍了 OSSpinLock 不再安全，主要原因发生在低优先级线程拿到锁时，高优先级线程进入忙等(busy-wait)状态，消耗大量 CPU 时间，从而导致低优先级线程拿不到 CPU 时间，也就无法完成任务并释放锁。这种问题被称为优先级反转。</p>
-<p>为什么忙等会导致低优先级线程拿不到时间片？这还得从操作系统的线程调度说起。</p>
-<p>现代操作系统在管理普通线程时，通常采用时间片轮转算法(Round Robin，简称 RR)。每个线程会被分配一段时间片(quantum)，通常在 10-100 毫秒左右。当线程用完属于自己的时间片以后，就会被操作系统挂起，放入等待队列中，直到下一次被分配时间片。</p>
-<p>自旋锁的实现原理</p>
-<p>自旋锁的目的是为了确保临界区只有一个线程可以访问，它的使用可以用下面这段伪代码来描述:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">do &#123;</span><br><span class="line">    Acquire Lock</span><br><span class="line">        Critical section  // 临界区</span><br><span class="line">    Release Lock</span><br><span class="line">        Reminder section // 不需要锁保护的代码</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">在Acquire Lock这一步，我们申请加锁，目的是为了保护临界区Critical section中的代码不会被多个线程执行， 自选锁实现的思路很简单，理论上来说只要定义一个全局的变量，用来表示锁的可用情况即可，伪代码如下</span><br><span class="line"></span><br><span class="line">//狭义的原子操作</span><br><span class="line">bool test_and_set (bool *target) &#123;</span><br><span class="line">    bool rv = *target;</span><br><span class="line">    *target = TRUE;</span><br><span class="line">    return rv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool lock = false; // 一开始没有锁上，任何线程都可以申请锁</span><br><span class="line">do &#123;</span><br><span class="line">    while(test_and_set(&amp;lock); // test_and_set 是一个原子操作</span><br><span class="line">        Critical section  // 临界区</span><br><span class="line">    lock = false; // 相当于释放锁，这样别的线程可以进入临界区</span><br><span class="line">        Reminder section // 不需要锁保护的代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果临界区的执行时间过长，使用自旋锁不是个好主意。之前我们介绍过时间片轮转算法，线程在多种情况下会退出自己的时间片。其中一种是用完了时间片的时间，被操作系统强制抢占。除此以外，当线程进行 I/O 操作，或进入睡眠状态时，都会主动让出时间片。显然在 while 循环中，线程处于忙等状态，白白浪费 CPU 时间，最终因为超时被操作系统抢占时间片。如果临界区执行时间较长，比如是文件读写，这种忙等是毫无必要的。</p>
-<p>自旋锁的问题：</p>
-<p>系统维护了 5 个不同的线程优先级/QoS: background，utility，default，user-initiated，user-interactive。高优先级线程始终会在低优先级线程前执行，一个线程不会受到比它更低优先级线程的干扰。这种线程调度算法会产生潜在的优先级反转问题，从而破坏了 spin lock。</p>
-<p>具体来说，如果一个低优先级的线程获得锁并访问共享资源，这时一个高优先级的线程也尝试获得这个锁，它会处于 spin lock 的忙等状态从而占用大量 CPU。此时低优先级线程无法与高优先级线程争夺 CPU 时间，从而导致任务迟迟完不成、无法释放 lock。这并不只是理论上的问题，libobjc 已经遇到了很多次这个问题了，于是苹果的工程师停用了 OSSpinLock。</p>
-<p>苹果工程师 Greg Parker 提到，对于这个问题，一种解决方案是用 truly unbounded backoff 算法，这能避免 livelock 问题，但如果系统负载高时，它仍有可能将高优先级的线程阻塞数十秒之久；另一种方案是使用 handoff lock 算法，这也是 libobjc 目前正在使用的。锁的持有者会把线程 ID 保存到锁内部，锁的等待者会临时贡献出它的优先级来避免优先级反转的问题。理论上这种模式会在比较复杂的多锁条件下产生问题，但实践上目前还一切都好。</p>
-<p>关于OSSpinLock的使用和基础实现</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#import OSSpinLock lock = OS_SPINLOCK_INIT;</span><br><span class="line">OSSpinLockLock(&amp;lock);</span><br><span class="line">//需要执行的代码</span><br><span class="line">OSSpinLockUnlock(&amp;lock);</span><br><span class="line">//OSSPINLOCK_DEPRECATED_REPLACE_WITH(os_unfair_lock)</span><br><span class="line">//苹果在OSSpinLock注释表示被废弃，改用不安全的锁替代</span><br></pre></td></tr></table></figure>
-<h3 id="信号量的锁："><a href="#信号量的锁：" class="headerlink" title="信号量的锁："></a>信号量的锁：</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">针对线程非安全的情况</span><br><span class="line">#define INIT(...) self = super.init; \</span><br><span class="line">if (!self) return nil; \</span><br><span class="line">__VA_ARGS__; \</span><br><span class="line">if (!_arr) return nil; \</span><br><span class="line">_lock = dispatch_semaphore_create(1); \</span><br><span class="line">return self;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#define LOCK(...) dispatch_semaphore_wait(_lock, DISPATCH_TIME_FOREVER); \</span><br><span class="line">__VA_ARGS__; \</span><br><span class="line">dispatch_semaphore_signal(_lock);</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/17/内存管理20180117/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yida">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="益达的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/17/内存管理20180117/" itemprop="url">iOS 内存分析</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-17T10:11:12+08:00">
-                2018-01-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>关于iOS内存：</p>
-<ol>
-<li>栈区   由编译器自动分配并释放，存放函数的参数值，局部变量等。栈是系统数据结构，对应线程/进程是唯一的，优点是快速高效，缺点是有限制，数据不灵活</li>
-</ol>
-<p>栈空间分静态分配和动态分配，</p>
-<p>静态分配是编译器完成的，比如自动变量（auto）的分配</p>
-<p>动态分配有alloc函数完成</p>
-<p>栈的动态分配无需释放（是自动的），也就没有释放函数，为可移植的程序起见，栈的动态分配操作是不被鼓励的</p>
-<p>注意点： 由编译器自动分配释放  局部变量是保存在栈区的</p>
-<p>申请后的系统响应： 存储每一个函数 在执行的时候都会向操作系统索要资源，栈区就是函数运行时的内存，栈区中的变量由编译器负责分配和释放，内存随着函数的运行分配，随着函数的结束而释放  ，由系统自动完成</p>
-<ol start="2">
-<li>堆区  由程序员分配和释放，如果程序不释放，程序结束时，可能会由操作系统回收，比如iOS中的alloc的是存放在堆中的，<br>优点是灵活方便，数据适应面广泛，但是效率有一定的降低</li>
-</ol>
-<p>堆是函数库内部数据结构，不一定唯一<br>不同堆分配的内存 无法互相操作 堆空间的分配总是动态的。</p>
-<ol start="3">
-<li>全局区（静态区static）全局变量和静态变量的存储是放在一起的，初始化的全局变量和静态变量存放的在一块区域，未初始化的全局变量和静态变量在相邻的另一块区域，程序结束后有系统释放。<br>注意：全局区域分为  未初始化全局区 bss段和初始化全局区： data段<br>举例：int a, 未初始化的， int a = 10;已经初始化的</li>
-</ol>
-<p>BSS段  程序结束后 由系统释放</p>
-<p>数据段： 程序结束后 由系统释放</p>
-<ol start="4">
-<li><p>文字常亮区  存放常亮字符串，程序结束后由系统释放</p>
-</li>
-<li><p>代码区 存放函数的二进制代码（程序结束后  由系统释放）</p>
-</li>
-</ol>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 10; 全局初始化区</span><br><span class="line">char *p；全局未初始化区</span><br></pre></td></tr></table></figure>
-<p>内存的申请大小限制：<br>栈： 栈是向低地址扩展的数据结构，是一块连续的内存区域，栈顶地址和栈的最大容量是系统预先规定好的，栈的大小是2M，如果申请的空间超过栈的剩余空间时，将提示overflow。<br>堆： 堆是向高地址扩展的数据结构，是不连续的内存区域，这是由于系统是用链表来存储的空闲内存地址，自然是不连续的，而链表的遍历方向是由低地址向高地址。</p>
-<p>栈: 由系统自动分配，速度较快，不会产生内存碎片<br>堆: 是由alloc分配的内存，速度比较慢，而且容易产生内存碎片，不过用起来最方便。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/13/iOS常用修饰关键字20180103/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yida">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="益达的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/13/iOS常用修饰关键字20180103/" itemprop="url">iOS常用的修饰关键字</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-13T10:11:12+08:00">
-                2018-01-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-01T10:11:12+08:00">
+                2018-01-01
               </time>
             
 
@@ -806,7 +484,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/01/Hexo博客搭建/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/01/20171201Hexo博客搭建/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yida">
@@ -825,7 +503,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/01/Hexo博客搭建/" itemprop="url">Hexo搭建博客</a></h1>
+                <a class="post-title-link" href="/2018/01/01/20171201Hexo博客搭建/" itemprop="url">Hexo搭建博客</a></h1>
         
 
         <div class="post-meta">
@@ -971,7 +649,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
