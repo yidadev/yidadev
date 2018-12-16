@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="关于VUE切换成virtual dom的树的流程 简单举例子：12345678910111213const demo = new Vue(&amp;#123;	data: &amp;#123;    	text:&quot;before&quot;,    &amp;#125;    render(h) &amp;#123;    	return h(&apos;div&apos;,&amp;#123;&amp;#125;,[        	h(&apos;span&apos;,&amp;#123;&amp;#125">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Virtual dom知识点">
+<meta property="og:url" content="http://yoursite.com/2018/05/10/关于Vue生成新的VirtualDOM/index.html">
+<meta property="og:site_name" content="益达的博客">
+<meta property="og:description" content="关于VUE切换成virtual dom的树的流程 简单举例子：12345678910111213const demo = new Vue(&amp;#123;	data: &amp;#123;    	text:&quot;before&quot;,    &amp;#125;    render(h) &amp;#123;    	return h(&apos;div&apos;,&amp;#123;&amp;#125;,[        	h(&apos;span&apos;,&amp;#123;&amp;#125">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-16T13:57:44.630Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Virtual dom知识点">
+<meta name="twitter:description" content="关于VUE切换成virtual dom的树的流程 简单举例子：12345678910111213const demo = new Vue(&amp;#123;	data: &amp;#123;    	text:&quot;before&quot;,    &amp;#125;    render(h) &amp;#123;    	return h(&apos;div&apos;,&amp;#123;&amp;#125;,[        	h(&apos;span&apos;,&amp;#123;&amp;#125">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/10/关于Vue生成新的VirtualDOM/">
+
+
+
+
+
+  <title>Virtual dom知识点 | 益达的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">益达的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/10/关于Vue生成新的VirtualDOM/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yida">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="益达的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Virtual dom知识点</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-10T10:11:12+08:00">
+                2018-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>关于VUE切换成virtual dom的树的流程</p>
+<p>简单举例子：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const demo = new Vue(&#123;</span><br><span class="line">	data: &#123;</span><br><span class="line">    	text:"before",</span><br><span class="line">    &#125;</span><br><span class="line">    render(h) &#123;</span><br><span class="line">    	return h('div',&#123;&#125;,[</span><br><span class="line">        	h('span',&#123;&#125;,[this.__toString__(this.text)])</span><br><span class="line">        ])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">setTimeout(function()&#123;</span><br><span class="line">	demo.text = "afer"</span><br><span class="line">&#125;,3000)</span><br></pre></td></tr></table></figure></p>
+<p>对应的虚拟dom的变化;;before-&gt;after的变化<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>before<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>after<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>监听data下的所有属性的变化,data的属性变化，如何触发对应的函数；；<br>ES5提供了新的方法，Object.defineProperty。根据这个方法，可以自定getter和setter函数，那么在获取对象属性后设置对象属性就能直接执行响应的回调函数；；</p>
+<p>语法Object.defineProperty方法会直接定义在一个新的属性上，或者修改一个对象的现有属性，并返回这个对象。<br>Object.defineProperty(obj,prop,description);<br>obj定义对象的属性；；prop 定义或者修改的属性  description 被定义和描述</p>
+<p>底层Vue类的定义：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Vue &#123;</span><br><span class="line">  constructor(options) &#123;</span><br><span class="line">    this.$options = options</span><br><span class="line">    this._data = options.data</span><br><span class="line">    observer(options.data, this._update.bind(this))</span><br><span class="line">    this._update()</span><br><span class="line">  &#125;</span><br><span class="line">  _update()&#123;</span><br><span class="line">    this.$options.render()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function observer(obj, cb) &#123;</span><br><span class="line">  Object.keys(obj).forEach((key) =&gt; &#123;</span><br><span class="line">    defineReactive(obj, key, obj[key], cb)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">改造后的方案：</span><br><span class="line">function observer(obj, cb) &#123;</span><br><span class="line">  Object.keys(obj).forEach((key) =&gt; &#123;</span><br><span class="line">  	if(typeof obj[key] === 'object') &#123;</span><br><span class="line">    	new obser</span><br><span class="line">    &#125;</span><br><span class="line">    defineReactive(obj, key, obj[key], cb)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function defineReactive(obj, key, val, cb) &#123;</span><br><span class="line">  Object.defineProperty(obj, key, &#123;</span><br><span class="line">    enumerable: true,</span><br><span class="line">    configurable: true,</span><br><span class="line">    get: () =&gt; &#123;</span><br><span class="line">      console.log('你访问了' + key)</span><br><span class="line">      return val</span><br><span class="line">    &#125;,</span><br><span class="line">    set: newVal =&gt; &#123;</span><br><span class="line">      if (newVal === val)</span><br><span class="line">        return</span><br><span class="line">      console.log('你设置了' + key)</span><br><span class="line">      console.log('新的' + key + ' = ' + newVal)</span><br><span class="line">      val = newVal</span><br><span class="line">      cb()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var demo1 = new Vue(&#123;</span><br><span class="line">  el: '#demo',</span><br><span class="line">  data: &#123;</span><br><span class="line">    text: "before"</span><br><span class="line">  &#125;,</span><br><span class="line">  render()&#123;</span><br><span class="line">    console.log("我要render了")</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">var demo2 = new Vue(&#123;</span><br><span class="line">	el:'#demo2',</span><br><span class="line">    data: &#123;</span><br><span class="line">    	text: 'before',</span><br><span class="line">        o: &#123;</span><br><span class="line">        	text:'o-before'</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    render() &#123;</span><br><span class="line">    	console.log('我要render')</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>添加代理<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">_proxy(key) &#123;</span><br><span class="line">  const self = this</span><br><span class="line">  Object.defineProperty(self, key, &#123;</span><br><span class="line">    configurable: true,</span><br><span class="line">    enumerable: true,</span><br><span class="line">    get: function proxyGetter() &#123;</span><br><span class="line">      return self._data[key]</span><br><span class="line">    &#125;,</span><br><span class="line">    set: function proxySetter(val) &#123;</span><br><span class="line">      self._data[key] = val</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">在构造函数中添加如下代码</span><br><span class="line"></span><br><span class="line">Object.keys(options.data).forEach(key =&gt; this._proxy(key))</span><br></pre></td></tr></table></figure></p>
+<h4 id="转换响应式工作完工"><a href="#转换响应式工作完工" class="headerlink" title="转换响应式工作完工"></a>转换响应式工作完工</h4><ol>
+<li>只要 data 的属性发生变化，就会触发 render 函数</li>
+<li>这也是为什么只有 data 中的属性是响应式的，而其他地方声明的值不是的原因</li>
+</ol>
+<p>但是这里有个问题 ？即触发 render 函数的准确度问题？</p>
+<h3 id="第二步-解决准确度问题，引出虚拟dom"><a href="#第二步-解决准确度问题，引出虚拟dom" class="headerlink" title="第二步,解决准确度问题，引出虚拟dom"></a>第二步,解决准确度问题，引出虚拟dom</h3><p>思考下边的 demo<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">  template: `</span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">span</span>&gt;</span>name:<span class="tag">&lt;/<span class="name">span</span>&gt;</span> &#123; &#123;name&#125; &#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>`,</span><br><span class="line">  data: &#123;</span><br><span class="line">    name: 'js',</span><br><span class="line">    age: 24</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">setTimeout(function()&#123;</span><br><span class="line">  demo.age = 25</span><br><span class="line">&#125;, 3000)</span><br></pre></td></tr></table></figure></p>
+<h3 id="引入虚拟demo"><a href="#引入虚拟demo" class="headerlink" title="引入虚拟demo"></a>引入虚拟demo</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">vue的两种写法</span><br><span class="line">// template模板写法（最常用的）</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    text: "before",</span><br><span class="line">  &#125;,</span><br><span class="line">  template: `</span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">span</span>&gt;</span>text:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span>`</span><br><span class="line">&#125;)</span><br><span class="line">// render函数写法，类似react的jsx写法</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    text: "before",</span><br><span class="line">  &#125;,</span><br><span class="line">  render (h) &#123;</span><br><span class="line">    return (</span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span>&gt;</span>text:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">转化成下面的格式</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    text: "before",</span><br><span class="line">  &#125;,</span><br><span class="line">  render()&#123;</span><br><span class="line">    return this.__h__('div', &#123;&#125;, [</span><br><span class="line">      this.__h__('span', &#123;&#125;, [this.__toString__(this.text)])</span><br><span class="line">    ])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">虚拟dom的生成</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    text: "before",</span><br><span class="line">  &#125;,</span><br><span class="line">  render()&#123;</span><br><span class="line">    return this.__h__('div', &#123;&#125;, [</span><br><span class="line">      this.__h__('span', &#123;&#125;, [this.__toString__(this.text)])</span><br><span class="line">    ])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">function VNode(tag, data, children, text) &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    tag: tag,</span><br><span class="line">    data: data,</span><br><span class="line">    children: children,</span><br><span class="line">    text: text</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Vue &#123;</span><br><span class="line">  constructor(options) &#123;</span><br><span class="line">    this.$options = options</span><br><span class="line">    const vdom = this._update()</span><br><span class="line">    console.log(vdom)</span><br><span class="line">  &#125;</span><br><span class="line">  _update() &#123;</span><br><span class="line">    return this._render.call(this)</span><br><span class="line">  &#125;</span><br><span class="line">  _render() &#123;</span><br><span class="line">    const vnode = this.$options.render.call(this)</span><br><span class="line">    return vnode</span><br><span class="line">  &#125;</span><br><span class="line">  __h__(tag, attr, children) &#123;</span><br><span class="line">    return VNode(tag, attr, children.map((child)=&gt;&#123;</span><br><span class="line">      if(typeof child === 'string')&#123;</span><br><span class="line">        return VNode(undefined, undefined, undefined, child)</span><br><span class="line">      &#125;else&#123;</span><br><span class="line">        return child</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;))</span><br><span class="line">  &#125;</span><br><span class="line">  __toString__(val) &#123;</span><br><span class="line">    return val == null ? '' : typeof val === 'object' ? JSON.stringify(val, null, 2) : String(val);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>回头看问题<br>我们需要知道 render 函数中依赖了 data 中的哪些属性，只有这些属性变化，才需要去触发 render 函数</p>
+<h3 id="第三步，依赖收集，准确渲染"><a href="#第三步，依赖收集，准确渲染" class="headerlink" title="第三步，依赖收集，准确渲染"></a>第三步，依赖收集，准确渲染</h3><p>思路： 在这之前，我们已经把 data 中的属性改成响应式了，当去获取或者修改这些变量时便能够触发相应函数。那这里就可以利用这个相应的函数做些手脚了。<br>当声明一个 vue 对象时，在执行 render 函数获取虚拟dom的这个过程中，已经对 render 中依赖的 data 属性进行了一次获取操作，这次获取操作便可以拿到所有依赖。<br>其实不仅是 render，任何一个变量的改别，是因为别的变量改变引起(观察者模式)，都可以用上述方法，也就是 computed 和 watch 的原理</p>
+<p>依赖收集<br>首先需要写一个依赖收集的类，每一个data中的属性都有可能被依赖，因此每个属性在响应式转化(defineReactive)的时候，就初始化它。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">class Dep &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this.subs = []</span><br><span class="line">  &#125;</span><br><span class="line">  add(cb) &#123;</span><br><span class="line">    this.subs.push(cb)</span><br><span class="line">  &#125;</span><br><span class="line">  notify() &#123;</span><br><span class="line">    console.log(this.subs)</span><br><span class="line">    this.subs.forEach((cb) =&gt; cb())</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function defineReactive(obj, key, val, cb) &#123;</span><br><span class="line">  const dep = new Dep()</span><br><span class="line">  Object.defineProperty(obj, key, &#123;</span><br><span class="line">    // 省略</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">class Dep &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this.subs = []</span><br><span class="line">  &#125;</span><br><span class="line">  add(cb) &#123;</span><br><span class="line">    this.subs.push(cb)</span><br><span class="line">  &#125;</span><br><span class="line">  notify() &#123;</span><br><span class="line">    console.log(this.subs)</span><br><span class="line">    this.subs.forEach((cb) =&gt; cb())</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行过程<br>当执行render函数的时候，依赖到的变量的get就会被执行，然后就把这个 render函数加到subs里面去。<br>当set的时候,就执行notify，将所有的subs数组里的函数执行，其中就包含render的执行。<br>代码中有一个Dep.target值，这个值时用来区分是普通的get还是收集依赖时的get<br>完整代码： <a href="https://github.com/SirM2z/assets/blob/master/vue-demo.js" target="_blank" rel="noopener">https://github.com/SirM2z/assets/blob/master/vue-demo.js</a></p>
+<p>vue react响应式简单对比<br>综上发现： 用Object.defineProperty这个特性可以精确的写出订阅发布模式，从这点来说，vue是优于react的，在没经过优化之前，vue的渲染机制一定是比react更加准确的，为了验证这一说法，我用两个框架同时写了两个相同的简单项目进行对比。</p>
+<p>没有对比就没有伤害<br>react项目地址：<a href="http://sirm2z.github.io/react-vue-test/react/index.html" target="_blank" rel="noopener">http://sirm2z.github.io/react-vue-test/react/index.html</a><br>vue项目地址：<a href="http://sirm2z.github.io/react-vue-test/vue/index.html" target="_blank" rel="noopener">http://sirm2z.github.io/react-vue-test/vue/index.html</a><br>通过对比发现，react 在正常使用的过程中产生了多余的渲染，在移动端或者组件嵌套非常深的情况下会产生非常大的性能消耗，因此在使用 react 的过程中，写好 react 生命周期中的 shouldComponentUpdate 是非常重要的！</p>
+<p>所有资源<br>完整代码： <a href="https://github.com/SirM2z/assets/blob/master/vue-demo.js" target="_blank" rel="noopener">https://github.com/SirM2z/assets/blob/master/vue-demo.js</a><br>PPT网址： <a href="http://sirm2z.github.io/vue-demo-ppt/index.html" target="_blank" rel="noopener">http://sirm2z.github.io/vue-demo-ppt/index.html</a><br>博客文章网址： <a href="http://www.jianshu.com/p/7374c4e91891" target="_blank" rel="noopener">http://www.jianshu.com/p/7374c4e91891</a><br>react项目地址： <a href="http://sirm2z.github.io/react-vue-test/react/index.html" target="_blank" rel="noopener">http://sirm2z.github.io/react-vue-test/react/index.html</a><br>vue项目地址： <a href="http://sirm2z.github.io/react-vue-test/vue/index.html" target="_blank" rel="noopener">http://sirm2z.github.io/react-vue-test/vue/index.html</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/18/shell脚本常用参数/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/20/flexBox布局/" rel="prev" title="Flex 布局">
+                Flex 布局 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">yida</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#转换响应式工作完工"><span class="nav-number">1.</span> <span class="nav-text">转换响应式工作完工</span></a></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#第二步-解决准确度问题，引出虚拟dom"><span class="nav-number"></span> <span class="nav-text">第二步,解决准确度问题，引出虚拟dom</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#引入虚拟demo"><span class="nav-number"></span> <span class="nav-text">引入虚拟demo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第三步，依赖收集，准确渲染"><span class="nav-number"></span> <span class="nav-text">第三步，依赖收集，准确渲染</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yida</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

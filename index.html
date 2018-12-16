@@ -229,6 +229,220 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/iOS设计文档/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yida">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="益达的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/10/iOS设计文档/" itemprop="url">Trip-to-iOS-Design-Patterns</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-10T10:11:12+08:00">
+                2018-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Trip-to-iOS-Design-Patterns"><a href="#Trip-to-iOS-Design-Patterns" class="headerlink" title="Trip-to-iOS-Design-Patterns"></a>Trip-to-iOS-Design-Patterns</h1><p>iOS 设计模式相关资料整理<br>随着写代码时间变长，业务逻辑越来越复杂，项目就会变的越来越臃肿，业务的拓展、Bug Fix将会越来越难进展。接着进行的就是重构工作，对重构而已，那设计模式、架构、当前的业务情况、将来可能遇到的需求 将是下一步的思考。本文将从设计模式、架构、实践三个方面梳理 iOS 架构设计。</p>
+<h4 id="必读文章"><a href="#必读文章" class="headerlink" title="必读文章"></a>必读文章</h4><ul>
+<li><a href="https://www.raywenderlich.com/46988/ios-design-patterns" target="_blank" rel="noopener">iOS Design Patterns</a> <blockquote>
+<p>文章从 iOS 视角解读了常用的几种设计模式，并给出了代码示例，非常推荐看英文原文，作为设计模式开篇也比较合适，实战性也强。<br>翻译 <a href="http://blog.jobbole.com/48115/" target="_blank" rel="noopener">一</a> <a href="http://blog.jobbole.com/48166/" target="_blank" rel="noopener">二</a> <a href="http://blog.jobbole.com/48254/" target="_blank" rel="noopener">三</a> <a href="http://blog.jobbole.com/48179/" target="_blank" rel="noopener">四</a></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="设计模式-经典图书系列"><a href="#设计模式-经典图书系列" class="headerlink" title="设计模式 经典图书系列"></a>设计模式 经典图书系列</h4><ul>
+<li><p>《Head First设计模式》 <a href="https://www.amazon.cn/Head-First%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%BC%97%E9%87%8C%E6%9B%BC/dp/B0011FBU34/ref=sr_1_1?ie=UTF8&amp;qid=1464418055&amp;sr=8-1&amp;keywords=head+first" target="_blank" rel="noopener">纸质版-亚马逊</a>  <a href="http://download.csdn.net/detail/kiratianyi/7471435" target="_blank" rel="noopener">电子版-PDF-CSDN</a></p>
+</li>
+<li><p>《大话设计模式》<a href="https://www.amazon.cn/%E5%A4%A7%E8%AF%9D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E7%A8%8B%E6%9D%B0/dp/B0011FHN5S/ref=sr_1_1?ie=UTF8&amp;qid=1464418409&amp;sr=8-1&amp;keywords=%E5%A4%A7%E8%AF%9D%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F" target="_blank" rel="noopener">纸质版-亚马逊</a>  <a href="http://download.csdn.net/detail/yousuosi/4364766" target="_blank" rel="noopener">源码及电子书-CSDN</a>  <a href="https://github.com/huang303513/Design-Pattern-For-iOS" target="_blank" rel="noopener">iOS版源码</a></p>
+</li>
+<li><p>《设计模式》- Gof <a href="https://www.amazon.cn/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6%E4%B8%9B%E4%B9%A6-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E5%8F%AF%E5%A4%8D%E7%94%A8%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%9F%BA%E7%A1%80-Erich-Gamma/dp/B001130JN8/ref=sr_1_1?ie=UTF8&amp;qid=1464419128&amp;sr=8-1&amp;keywords=%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F" target="_blank" rel="noopener">纸质版-亚马逊</a>  <a href="http://download.csdn.net/detail/trendgrucee/4795224" target="_blank" rel="noopener">电子书-PDF-CSDN</a></p>
+</li>
+<li><p>《Objective-C编程之道：iOS 设计模式》 <a href="https://www.amazon.cn/Objective-C%E7%BC%96%E7%A8%8B%E4%B9%8B%E9%81%93-iOS%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%A7%A3%E6%9E%90-%E9%92%9F%E5%86%A0%E8%B4%A4/dp/B0065V3ALO/ref=sr_1_1?ie=UTF8&amp;qid=1464418960&amp;sr=8-1&amp;keywords=Objective-C%E7%BC%96%E7%A8%8B%E4%B9%8B%E9%81%93%EF%BC%9AiOS+%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F" target="_blank" rel="noopener">纸质书-亚马逊</a>  <a href="http://download.csdn.net/detail/qiaokeli123456789/6691097" target="_blank" rel="noopener">电子书及源码</a></p>
+</li>
+</ul>
+<h4 id="设计模式-资源推荐"><a href="#设计模式-资源推荐" class="headerlink" title="设计模式 资源推荐"></a>设计模式 资源推荐</h4><ul>
+<li><p>Cocoa Design Patterns  <a href="https://developer.apple.com/legacy/library/documentation/Cocoa/Conceptual/CocoaFundamentals/CocoaDesignPatterns/CocoaDesignPatterns.html#//apple_ref/doc/uid/TP40002974-CH6-SW6" target="_blank" rel="noopener">官方资料</a>  <a href="http://download.csdn.net/detail/sc_cheng/2981710" target="_blank" rel="noopener">中文翻译版</a></p>
+</li>
+<li><p><a href="http://blog.csdn.net/lovelion/article/details/17517213" target="_blank" rel="noopener">史上最全设计模式导学目录（完整版)</a> </p>
+<blockquote>
+<p>强烈推荐，推荐指数五颗星，刘伟老师力作，讲的非常好，通俗易懂，而且举例的应用场景也非常恰当，遗憾的是样例代码是 Java 写的，不过模式是通用的。</p>
+</blockquote>
+</li>
+<li><p><a href="http://design-patterns.readthedocs.org/zh_CN/latest/index.html" target="_blank" rel="noopener">图说设计模式</a></p>
+<blockquote>
+<p>推荐指数4颗星，讲了不少UML的相关知识，能更好的理解设计模式中时序图等Mac下的UML工具推荐 StarUML ,做的也不错。</p>
+</blockquote>
+</li>
+<li><p><a href="https://github.com/ochococo/Design-Patterns-In-Swift" target="_blank" rel="noopener">Design-Patterns-In-Swift</a></p>
+</li>
+</ul>
+<h4 id="InfoQ-iOS应用架构谈-推荐指数-5星"><a href="#InfoQ-iOS应用架构谈-推荐指数-5星" class="headerlink" title="InfoQ - iOS应用架构谈 - 推荐指数 5星"></a>InfoQ - iOS应用架构谈 - 推荐指数 5星</h4><ul>
+<li><a href="http://casatwy.com/iosying-yong-jia-gou-tan-kai-pian.html" target="_blank" rel="noopener">iOS应用架构谈（一）：架构设计的方法论</a></li>
+<li><a href="http://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html" target="_blank" rel="noopener">iOS应用架构谈（二）：View层的组织和调用方案</a></li>
+<li><a href="http://casatwy.com/iosying-yong-jia-gou-tan-wang-luo-ceng-she-ji-fang-an.html" target="_blank" rel="noopener">iOS应用架构谈（三）：网络层设计方案</a></li>
+<li><a href="http://casatwy.com/iosying-yong-jia-gou-tan-ben-di-chi-jiu-hua-fang-an-ji-dong-tai-bu-shu.html" target="_blank" rel="noopener">iOS应用架构谈（四）：本地持久化方案及动态部署</a></li>
+</ul>
+<h4 id="App-架构设计实践"><a href="#App-架构设计实践" class="headerlink" title="App 架构设计实践"></a>App 架构设计实践</h4><ul>
+<li><a href="https://www.sdk.cn/news/2023" target="_blank" rel="noopener">饿了么移动APP的架构演进</a></li>
+<li><a href="http://www.infoq.com/cn/news/2016/03/lixianhui-interview" target="_blank" rel="noopener">滴滴iOS客户端的架构演变之路</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&amp;mid=403412672&amp;idx=1&amp;sn=2cceb873ee4640830aad3261ae177df5&amp;scene=0&amp;key=710a5d99946419d9ba63d1d480eb3f0c2d49be9d244f34e460226b2f4caaa02565fc4d16af8f64ca79085f4db276e89f&amp;ascene=0&amp;uin=MjY1NTg0NzMyMQ%3D%3D&amp;devicetype=iMac+MacBookPro11%2C4+OSX+OSX+10.11.4+build(15E65" target="_blank" rel="noopener">携程移动App架构优化之旅</a>&amp;version=11020201&amp;pass_ticket=JxdNVNrS%2BerOsvJdjWQGHAqgDkV2%2FmL9OHAETsCT%2Bvp0%2B%2FLiXasOwpgYIsgQQn8O)<a href="http://www.stuq.org/ppt/frame_show/659/4c79d4c7eb2061f8790b5e7e6fe42703#/1" target="_blank" rel="noopener">PPT</a></li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng==&amp;mid=2651112273&amp;idx=1&amp;sn=893a66a04e541a99b7bc4d7cf227e2f7#rd" target="_blank" rel="noopener">新浪微博iOS客户端架构与优化之路</a></li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng==&amp;mid=2651112231&amp;idx=1&amp;sn=4578ff1009ee774093c45a3d8c19dd58#rd" target="_blank" rel="noopener">Weex详解：移动端高性能动态化方案</a></li>
+<li><a href="http://www.infoq.com/cn/articles/evolution-of-facebook-ios-app-ten-years-technology" target="_blank" rel="noopener">覃超：Facebook iOS App技术演化十年之路</a></li>
+<li><a href="http://blog.csdn.net/yaoyu/article/details/70184539" target="_blank" rel="noopener">天弘基金移动App客户端架构优化之路</a></li>
+<li><a href="http://tech.glowing.com/cn/service-oriented-ios-architecture/" target="_blank" rel="noopener">Service Oriented 的 iOS 应用架构</a></li>
+<li><a href="http://gracelancy.com/blog/2016/01/06/ape-ios-arch-design/" target="_blank" rel="noopener">猿题库 iOS 客户端架构设计</a></li>
+<li><a href="http://www.infoq.com/cn/articles/alibaba-mobile-infrastructure" target="_blank" rel="noopener">QCon旧金山演讲总结：阿里无线技术架构演进</a></li>
+<li><a href="http://blog.linzihong.com/2017/07/27/framework/" target="_blank" rel="noopener">斗米客户端的架构思想</a></li>
+</ul>
+<h4 id="组件化设计"><a href="#组件化设计" class="headerlink" title="组件化设计"></a>组件化设计</h4><ul>
+<li><a href="http://limboy.me/tech/2016/03/10/mgj-components.html" target="_blank" rel="noopener">蘑菇街 App 的组件化之路</a></li>
+<li><a href="http://limboy.me/tech/2016/03/14/mgj-components-continued.html" target="_blank" rel="noopener">蘑菇街 App 的组件化之路·续</a></li>
+<li><a href="http://casatwy.com/iOS-Modulization.html" target="_blank" rel="noopener">iOS应用架构谈（五）：组件化方案</a></li>
+<li><a href="http://blog.cnbang.net/tech/3080/" target="_blank" rel="noopener">iOS 组件化方案探索</a></li>
+<li><a href="http://chuansong.me/n/320688951236" target="_blank" rel="noopener">糯米移动组件架构演进之路</a></li>
+<li><a href="http://www.infoq.com/cn/articles/xiaojukeji-component-practice-and-optimization" target="_blank" rel="noopener">滴滴的组件化实践与优化</a></li>
+<li><a href="http://mp.weixin.qq.com/s?__biz=MzA3ODg4MDk0Ng==&amp;mid=2651112821&amp;idx=1&amp;sn=2987ba2c9d68e3982e795d9eeb15f82b&amp;chksm=844c6ca8b33be5be42e673ff2a9087628b0d9fab5e5a403d4bd346b134f4ffe110e423967c3e&amp;scene=0#rd" target="_blank" rel="noopener">豆瓣App的模块化实践</a></li>
+<li><a href="http://www.infoq.com/cn/articles/ios-app-component-development-practice" target="_blank" rel="noopener">iOS App组件化开发实践</a></li>
+<li><a href="http://mp.weixin.qq.com/s/PbOh-l0E4bD3HoKj0GzYWQ" target="_blank" rel="noopener">58 同城 iOS 客户端组件化演变历程</a></li>
+<li><a href="https://yq.aliyun.com/articles/129" target="_blank" rel="noopener">手机淘宝客户端架构探索实践</a></li>
+<li><a href="http://www.infoq.com/cn/articles/jd-ios-component-management?utm_source=articles_about_mobile&amp;utm_medium=link&amp;utm_campaign=mobile" target="_blank" rel="noopener">京东iOS客户端组件管理实践</a></li>
+<li><a href="https://www.jianshu.com/p/76da56b3bd55" target="_blank" rel="noopener">iOS 组件化 —— 路由设计思路分析</a></li>
+<li><a href="https://www.jianshu.com/p/67a6004f6930" target="_blank" rel="noopener">组件化架构漫谈</a></li>
+</ul>
+<h4 id="IM架构梳理"><a href="#IM架构梳理" class="headerlink" title="IM架构梳理"></a>IM架构梳理</h4><ul>
+<li><a href="http://www.52im.net/forum.php?mod=collection&amp;op=all" target="_blank" rel="noopener">IM 开发者社区</a></li>
+<li><a href="http://blog.csdn.net/skymingst/article/details/49448717" target="_blank" rel="noopener">IM架构梳理</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzAwNjQwNzU2NQ==&amp;mid=402441278&amp;idx=1&amp;sn=af82781e3e6b694d82ac8454dbe3ae67&amp;scene=0&amp;key=710a5d99946419d9ebeb6a76103f5b3c9a2a96d61dd040e7eaacca508005e842656a35d9b9664ec603be12ce0c3f25c7&amp;ascene=0&amp;uin=MjY1NTg0NzMyMQ%3D%3D&amp;devicetype=iMac+MacBookPro11%2C4+OSX+OSX+10.11.3+build(15D21" target="_blank" rel="noopener">58到家消息系统设计与开发实践</a>&amp;version=11020201&amp;pass_ticket=TlXzGHRFhCo4eytB1hbIW0fFZq50RM%2BdZKQ7eajgE1C8Lc0aRV7IIgbSt6S4h5eZ)</li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=205775353&amp;idx=1&amp;sn=ecc1f32ec9585f2c7672a27dfbc726ca&amp;scene=1&amp;srcid=0317WNL1c9K3dhx6rqsrhXL5&amp;key=710a5d99946419d970963f96a056ab527d7e0a5ec70e2094cbb32922797076e77c9282e8ead417792c53ca5798beac51&amp;ascene=0&amp;uin=MjY1NTg0NzMyMQ%3D%3D&amp;devicetype=iMac+MacBookPro11%2C4+OSX+OSX+10.11.3+build(15D21" target="_blank" rel="noopener">im协议设计选型（上）</a>&amp;version=11020201&amp;pass_ticket=TlXzGHRFhCo4eytB1hbIW0fFZq50RM%2BdZKQ7eajgE1C8Lc0aRV7IIgbSt6S4h5eZ)</li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=205034544&amp;idx=1&amp;sn=26bbbf4a49ae6b6c4b8c3cba7f79764f&amp;scene=1&amp;srcid=0317zhrXNGEHs2T4xAjbCoeO&amp;key=710a5d99946419d9f10782b19962c97c88912b052aadce02ef6e5d82a2b2814aa055d499a22072c468f7c1d3f085cc8a&amp;ascene=0&amp;uin=MjY1NTg0NzMyMQ%3D%3D&amp;devicetype=iMac+MacBookPro11%2C4+OSX+OSX+10.11.3+build(15D21" target="_blank" rel="noopener">webim如何保证消息的可靠投递</a>&amp;version=11020201&amp;pass_ticket=TlXzGHRFhCo4eytB1hbIW0fFZq50RM%2BdZKQ7eajgE1C8Lc0aRV7IIgbSt6S4h5eZ)</li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=205001346&amp;idx=1&amp;sn=fd87cc010bf4548589c9fabea80c4cad&amp;scene=1&amp;srcid=0317oohatukhxTbBwWHKP6cU&amp;key=710a5d99946419d9708e602d966c3a50e34f09ca848c5b3bf380b79bc6b34ad6e84062ed43a22333531a6525cc8fa07d&amp;ascene=0&amp;uin=MjY1NTg0NzMyMQ%3D%3D&amp;devicetype=iMac+MacBookPro11%2C4+OSX+OSX+10.11.3+build(15D21" target="_blank" rel="noopener">webim如何用轮询保证消息绝对实时</a>&amp;version=11020201&amp;pass_ticket=TlXzGHRFhCo4eytB1hbIW0fFZq50RM%2BdZKQ7eajgE1C8Lc0aRV7IIgbSt6S4h5eZ)</li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MjM5MzA0ODkyMA==&amp;mid=405991976&amp;idx=1&amp;sn=4bf8982f2dc2ea2df62c312e4fe508f4&amp;scene=0&amp;key=710a5d99946419d98e3fd2dc46318f0db3ec6994c949bcf1ed7aa9792993c67eb1388d95f0019d30c30a407b14211064&amp;ascene=0&amp;uin=MjY1NTg0NzMyMQ%3D%3D&amp;devicetype=iMac+MacBookPro11%2C4+OSX+OSX+10.11.3+build(15D21" target="_blank" rel="noopener">一套简洁的即时通信 (IM) 系统</a>&amp;version=11020201&amp;pass_ticket=TlXzGHRFhCo4eytB1hbIW0fFZq50RM%2BdZKQ7eajgE1C8Lc0aRV7IIgbSt6S4h5eZ)</li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MjM5ODYxMDA5OQ==&amp;mid=205117508&amp;idx=1&amp;sn=71eecf04581e68deee4a44f7786309f5&amp;scene=1&amp;srcid=0317jpSQhhxbYvM2Kz6vlhOK&amp;key=710a5d99946419d9c798c52d8b5dd4f67c1c4b144bb07217906e72260d353ac92559a0451d7548f74cc70ca9e0223637&amp;ascene=0&amp;uin=MjY1NTg0NzMyMQ%3D%3D&amp;devicetype=iMac+MacBookPro11%2C4+OSX+OSX+10.11.3+build(15D21" target="_blank" rel="noopener">微博与im消息实现对比[随想]</a>&amp;version=11020201&amp;pass_ticket=TlXzGHRFhCo4eytB1hbIW0fFZq50RM%2BdZKQ7eajgE1C8Lc0aRV7IIgbSt6S4h5eZ)</li>
+</ul>
+<h4 id="实战学习"><a href="#实战学习" class="headerlink" title="实战学习"></a>实战学习</h4><p>最后推荐些可以帮助理解实战的开源项目：</p>
+<ul>
+<li><a href="https://github.com/singro/v2ex" target="_blank" rel="noopener">V2EX - V2EX iOS客户端，已上线项目</a></li>
+<li><a href="https://github.com/mozilla/firefox-ios" target="_blank" rel="noopener">Firox-IOS - Firox iOS客户端，用Swift写的</a></li>
+<li><a href="https://github.com/peter-iakovlev/Telegram" target="_blank" rel="noopener">Telegram - 一个非常牛XXX的开源社交项目</a></li>
+<li><a href="https://github.com/netease-im/NIM_iOS_Demo" target="_blank" rel="noopener">网易云信开源UI组件</a></li>
+</ul>
+<h4 id="其他资源："><a href="#其他资源：" class="headerlink" title="其他资源："></a>其他资源：</h4><ul>
+<li><a href="http://objccn.io/issue-13/" target="_blank" rel="noopener">objccn - 架构 - 强烈推荐</a></li>
+<li><a href="http://www.cocoachina.com/programmer/20150617/12170.html" target="_blank" rel="noopener">怎么面试架构师</a></li>
+<li><a href="https://github.com/zhuchaowe/EasyIOS" target="_blank" rel="noopener">EasyIOS</a></li>
+<li><a href="https://github.com/uxyheaven/NativeAppFrameworkDesign" target="_blank" rel="noopener">移动App架构设计</a></li>
+<li><a href="https://realm.io/cn/news/slug-marcus-zarra-exploring-mvcn-swift/?utm_source=tuicool&amp;utm_medium=referral" target="_blank" rel="noopener">探索 Swift 中的 MVC-N 模式</a></li>
+<li><a href="https://github.com/lovemo/MVVMFramework" target="_blank" rel="noopener">MVVMFramework</a></li>
+<li><a href="http://blog.jobbole.com/55505/" target="_blank" rel="noopener">iOS设计模式之观察者模式</a></li>
+<li><a href="http://blog.jobbole.com/56439/" target="_blank" rel="noopener">iOS设计模式反思之单例模式的进化-非翻译</a></li>
+<li><a href="http://blog.jobbole.com/20496/" target="_blank" rel="noopener">关于 23 种设计模式的有趣见解-非翻译</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/03/iOS综合文件总结/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -486,7 +700,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/18/iOS锁机制/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/18/位运算/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yida">
@@ -505,7 +719,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/18/iOS锁机制/" itemprop="url">常用的锁机制</a></h1>
+                <a class="post-title-link" href="/2018/11/18/位运算/" itemprop="url">关于位运算</a></h1>
         
 
         <div class="post-meta">
@@ -557,23 +771,298 @@
       
         
           
-            <h3 id="锁的性能的排序"><a href="#锁的性能的排序" class="headerlink" title="锁的性能的排序"></a>锁的性能的排序</h3><p><img src="http://images.bestswifter.com/lock_benchmark.png" alt=""></p>
-<p>可以看到的是，目前来说自旋锁（OSSPinLock）的性能是最好的，我们常用的synchronized的性能是最差的；</p>
-<h3 id="OSSPinLock（自旋锁）"><a href="#OSSPinLock（自旋锁）" class="headerlink" title="OSSPinLock（自旋锁）"></a>OSSPinLock（自旋锁）</h3><p>上述文章中已经介绍了 OSSpinLock 不再安全，主要原因发生在低优先级线程拿到锁时，高优先级线程进入忙等(busy-wait)状态，消耗大量 CPU 时间，从而导致低优先级线程拿不到 CPU 时间，也就无法完成任务并释放锁。这种问题被称为优先级反转。</p>
-<p>为什么忙等会导致低优先级线程拿不到时间片？这还得从操作系统的线程调度说起。</p>
-<p>现代操作系统在管理普通线程时，通常采用时间片轮转算法(Round Robin，简称 RR)。每个线程会被分配一段时间片(quantum)，通常在 10-100 毫秒左右。当线程用完属于自己的时间片以后，就会被操作系统挂起，放入等待队列中，直到下一次被分配时间片。</p>
-<p>自旋锁的实现原理</p>
-<p>自旋锁的目的是为了确保临界区只有一个线程可以访问，它的使用可以用下面这段伪代码来描述:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">do &#123;</span><br><span class="line">    Acquire Lock</span><br><span class="line">        Critical section  // 临界区</span><br><span class="line">    Release Lock</span><br><span class="line">        Reminder section // 不需要锁保护的代码</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">在Acquire Lock这一步，我们申请加锁，目的是为了保护临界区Critical section中的代码不会被多个线程执行， 自选锁实现的思路很简单，理论上来说只要定义一个全局的变量，用来表示锁的可用情况即可，伪代码如下</span><br><span class="line"></span><br><span class="line">//狭义的原子操作</span><br><span class="line">bool test_and_set (bool *target) &#123;</span><br><span class="line">    bool rv = *target;</span><br><span class="line">    *target = TRUE;</span><br><span class="line">    return rv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bool lock = false; // 一开始没有锁上，任何线程都可以申请锁</span><br><span class="line">do &#123;</span><br><span class="line">    while(test_and_set(&amp;lock); // test_and_set 是一个原子操作</span><br><span class="line">        Critical section  // 临界区</span><br><span class="line">    lock = false; // 相当于释放锁，这样别的线程可以进入临界区</span><br><span class="line">        Reminder section // 不需要锁保护的代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果临界区的执行时间过长，使用自旋锁不是个好主意。之前我们介绍过时间片轮转算法，线程在多种情况下会退出自己的时间片。其中一种是用完了时间片的时间，被操作系统强制抢占。除此以外，当线程进行 I/O 操作，或进入睡眠状态时，都会主动让出时间片。显然在 while 循环中，线程处于忙等状态，白白浪费 CPU 时间，最终因为超时被操作系统抢占时间片。如果临界区执行时间较长，比如是文件读写，这种忙等是毫无必要的。</p>
-<p>自旋锁的问题：</p>
-<p>系统维护了 5 个不同的线程优先级/QoS: background，utility，default，user-initiated，user-interactive。高优先级线程始终会在低优先级线程前执行，一个线程不会受到比它更低优先级线程的干扰。这种线程调度算法会产生潜在的优先级反转问题，从而破坏了 spin lock。</p>
-<p>具体来说，如果一个低优先级的线程获得锁并访问共享资源，这时一个高优先级的线程也尝试获得这个锁，它会处于 spin lock 的忙等状态从而占用大量 CPU。此时低优先级线程无法与高优先级线程争夺 CPU 时间，从而导致任务迟迟完不成、无法释放 lock。这并不只是理论上的问题，libobjc 已经遇到了很多次这个问题了，于是苹果的工程师停用了 OSSpinLock。</p>
-<p>苹果工程师 Greg Parker 提到，对于这个问题，一种解决方案是用 truly unbounded backoff 算法，这能避免 livelock 问题，但如果系统负载高时，它仍有可能将高优先级的线程阻塞数十秒之久；另一种方案是使用 handoff lock 算法，这也是 libobjc 目前正在使用的。锁的持有者会把线程 ID 保存到锁内部，锁的等待者会临时贡献出它的优先级来避免优先级反转的问题。理论上这种模式会在比较复杂的多锁条件下产生问题，但实践上目前还一切都好。</p>
-<p>关于OSSpinLock的使用和基础实现</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#import OSSpinLock lock = OS_SPINLOCK_INIT;</span><br><span class="line">OSSpinLockLock(&amp;lock);</span><br><span class="line">//需要执行的代码</span><br><span class="line">OSSpinLockUnlock(&amp;lock);</span><br><span class="line">//OSSPINLOCK_DEPRECATED_REPLACE_WITH(os_unfair_lock)</span><br><span class="line">//苹果在OSSpinLock注释表示被废弃，改用不安全的锁替代</span><br></pre></td></tr></table></figure>
-<h3 id="信号量的锁："><a href="#信号量的锁：" class="headerlink" title="信号量的锁："></a>信号量的锁：</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">针对线程非安全的情况</span><br><span class="line">#define INIT(...) self = super.init; \</span><br><span class="line">if (!self) return nil; \</span><br><span class="line">__VA_ARGS__; \</span><br><span class="line">if (!_arr) return nil; \</span><br><span class="line">_lock = dispatch_semaphore_create(1); \</span><br><span class="line">return self;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#define LOCK(...) dispatch_semaphore_wait(_lock, DISPATCH_TIME_FOREVER); \</span><br><span class="line">__VA_ARGS__; \</span><br><span class="line">dispatch_semaphore_signal(_lock);</span><br></pre></td></tr></table></figure>
-<h3 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h3>
+            <p>什么是位运算</p>
+<p>程序中的所有数在计算机内存中都是以二进制形式存储的。位运算说穿了，就是直接对整数在内存中的二进制位运算。比如，and运算本来是一个逻辑运算符，但整数与整数之间可以进行and运算。举个例子，6的二进制110，11的二进制是1011，那么6 and 11的结果2， 它是二进制对应位进行逻辑运算的结果(0标识false，1标识true，空位都是当0处理)</p>
+<p>由于位运算直接对内存数据进行操作，不需要转成十进制，因此处理速度非常快。</p>
+<p>异或运算有结合律</p>
+<p>常用的位运算操作：</p>
+<p>X&amp; 1 == 1 或者  == 0 来判断 奇数偶数；（如果使用%的话，需要在寄存器里面做一次除法，然后得到他的余数）<br>X = X &amp;（X - 1） 得出清零最低位的1<br>X &amp; -X 得出最低位的1</p>
+<p>统计策略中的1的数量都多少个，先统计，</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/18/模块化/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yida">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="益达的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/18/模块化/" itemprop="url">面试注意事项</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-18T22:13:29+08:00">
+                2018-11-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="主流路由的设计方案"><a href="#主流路由的设计方案" class="headerlink" title="主流路由的设计方案"></a>主流路由的设计方案</h4><p>蘑菇街参考Limoy boy</p>
+<p><a href="https://limboy.me/tech/2016/03/14/mgj-components-continued.html" target="_blank" rel="noopener">https://limboy.me/tech/2016/03/14/mgj-components-continued.html</a></p>
+<p><a href="https://casatwy.com/iOS-Modulization.html" target="_blank" rel="noopener">https://casatwy.com/iOS-Modulization.html</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/18/面试准备/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yida">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="益达的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/18/面试准备/" itemprop="url">面试注意事项</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-18T22:13:29+08:00">
+                2018-11-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="心理准备"><a href="#心理准备" class="headerlink" title="心理准备"></a>心理准备</h1><h3 id="明确动机"><a href="#明确动机" class="headerlink" title="明确动机"></a>明确动机</h3><p>比如为什么要跳槽或你想从事什么内容? 马爸爸曾提及过三要素(钱、心、事), 你是否完全认同? 或是有其他的原因?<br>不鼓励轻易跳槽, 跳槽未必有利于你长期的发展, 还有就是像某东在就职经历这块卡的很严</p>
+<h3 id="优势是啥"><a href="#优势是啥" class="headerlink" title="优势是啥"></a>优势是啥</h3><p>面对其他候选人, 是否清楚自己的优势？比如你某方面技术突出、抗压能力更好、沟通能力更好等.</p>
+<h3 id="最坏打算"><a href="#最坏打算" class="headerlink" title="最坏打算"></a>最坏打算</h3><p>若决定离开, 那么便坚决离开, 没有回头路. 决定前做好最坏打算, 比如连续面试下来结果都不好, 是否能承受, 有无备选方案?</p>
+<h3 id="学会健忘"><a href="#学会健忘" class="headerlink" title="学会健忘"></a>学会健忘</h3><p>可能某几次面试结果不尽人意, 或是因为准备不足, 或是因为”气场不和”等等. 总之摆正心态, 忘记之前的面试结果, 对面试不足之处有针对性的去总结和提高, 然后接着面就好</p>
+<p>尤其对于”放长线作战”的同学, 个人推荐花时间搞清楚以上4点</p>
+<h1 id="物资准备"><a href="#物资准备" class="headerlink" title="物资准备"></a>物资准备</h1><p>“物资”直接决定面试的成败. 主要分为硬实力与软实力的体现</p>
+<h3 id="硬实力"><a href="#硬实力" class="headerlink" title="硬实力"></a>硬实力</h3><h4 id="通用技能"><a href="#通用技能" class="headerlink" title="通用技能"></a>通用技能</h4><ul>
+<li>数据结构, 算法(Sort、字符串、数组、位操作、回溯、双指针、DFS、BFS、DP、分治、二分查找..)</li>
+<li>设计模式(创建型、结构型、行为型设计模式)</li>
+<li>计算机网络(应用层/传输层协议、网络分层..)</li>
+<li>操作系统(进程、线程、内存布局..)</li>
+<li>编译原理(编译过程..)</li>
+</ul>
+<h4 id="iOS技能"><a href="#iOS技能" class="headerlink" title="iOS技能"></a>iOS技能</h4><ul>
+<li>修饰符, 可变不可变对象等基础</li>
+<li>Runtime</li>
+<li>RunLoop</li>
+<li>KVC、KVO原理</li>
+<li>block本质</li>
+<li>category本质</li>
+<li>内存管理</li>
+<li>事件传递</li>
+<li>App、VC、View、CALayer生命周期</li>
+<li>多线程(队列、锁)</li>
+<li>性能优化(体验优化、启动优化、网络优化、编译优化)</li>
+<li>主流组件化、模块化、架构方案</li>
+<li>Core Animation、屏幕渲染等</li>
+<li>数据持久化方案</li>
+<li>动态化方案(Hybird/RN/Weex/Flutter)</li>
+</ul>
+<h4 id="项目经历"><a href="#项目经历" class="headerlink" title="项目经历"></a>项目经历</h4><ul>
+<li>简历上写的</li>
+<li>主流三方库</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>算法大厂必考项目, 不过多描述, 推荐leetcode分类型进行算法思路的训练, 一般可以秒杀medium的题目足矣, 仅一次问到hard难度的题目</li>
+<li>iOS知识点考察, 仅知道是什么还不够, 更多的是为什么. 平时注意积累, 比如看源码, 博客文章(内容未必都对, 带着辩证思维去看)等. 另外印象笔记剪藏功能用于收藏回顾真的相当不错.</li>
+<li>面试官往往会由浅入深进行考察, 若不会就明确表示出来(吃过强答的亏, 印象分那是卡卡卡的掉.) 一定要多与面试官沟通, 倾听面试官把问题描述完, 若只是忘了细节争取能说下思路也好</li>
+</ul>
+<h1 id="职业发展"><a href="#职业发展" class="headerlink" title="职业发展"></a>职业发展</h1><p>这方面结合各位大佬赠与的宝贵建议简单概括一下</p>
+<h3 id="围绕核心"><a href="#围绕核心" class="headerlink" title="围绕核心"></a>围绕核心</h3><p>对于走技术路线的同学来说, 毫无疑问就是不断提升技术方面的深度以及广度</p>
+<h3 id="提高软实力"><a href="#提高软实力" class="headerlink" title="提高软实力"></a>提高软实力</h3><p>专业以外的能力, 具体前边也有提及, 比如学习方式的改进, 沟通能力的提高, 变得更靠谱等</p>
+<h3 id="承担更多"><a href="#承担更多" class="headerlink" title="承担更多"></a>承担更多</h3><p>不单单专注于完成分类之事或提高个人, 可以尝试放大格局, 主动去承担本分以外的职责, 比如思考并实践对整个团队或者整个公司层面有益的事</p>
+
           
         
       
@@ -879,7 +1368,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/18/位运算/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/15/dsYM分析/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yida">
@@ -898,7 +1387,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/18/位运算/" itemprop="url">关于位运算</a></h1>
+                <a class="post-title-link" href="/2018/06/15/dsYM分析/" itemprop="url">dSYM你是如何分析的</a></h1>
         
 
         <div class="post-meta">
@@ -910,8 +1399,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-18T22:13:29+08:00">
-                2018-11-18
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-15T10:11:12+08:00">
+                2018-06-15
               </time>
             
 
@@ -950,13 +1439,8 @@
       
         
           
-            <p>什么是位运算</p>
-<p>程序中的所有数在计算机内存中都是以二进制形式存储的。位运算说穿了，就是直接对整数在内存中的二进制位运算。比如，and运算本来是一个逻辑运算符，但整数与整数之间可以进行and运算。举个例子，6的二进制110，11的二进制是1011，那么6 and 11的结果2， 它是二进制对应位进行逻辑运算的结果(0标识false，1标识true，空位都是当0处理)</p>
-<p>由于位运算直接对内存数据进行操作，不需要转成十进制，因此处理速度非常快。</p>
-<p>异或运算有结合律</p>
-<p>常用的位运算操作：</p>
-<p>X&amp; 1 == 1 或者  == 0 来判断 奇数偶数；（如果使用%的话，需要在寄存器里面做一次除法，然后得到他的余数）<br>X = X &amp;（X - 1） 得出清零最低位的1<br>X &amp; -X 得出最低位的1</p>
-<p>统计策略中的1的数量都多少个，先统计，</p>
+            <p>dSYM你是如何分析的<br>方法1 使用XCode<br>这种方法可能是最容易的方法了。</p>
+<p>要使用Xcode符号化 crash log，你需要下面所列的3个文件：<br>crash报告（.crash文件）<br>符号文件 (.dsymb文件)<br>应用程序文件 (appName.app文件，把IPA文件后缀改为zip，然后解压，Payload目录下的appName.app文件), 这里的appName是你的应用程序的名称。<br>把这3个文件放到同一个目录下，打开Xcode的Window菜单下的organizer，然后点击Devices tab，然后选中左边的Device Logs。<br>然后把.crash文件拖到Device Logs或者选择下面的import导入.crash文件。<br>这样你就可以看到crash的详细log了。<br>方法2 使用命令行工具symbolicatecrash<br>有时候Xcode不能够很好的符号化crash文件。我们这里介绍如何通过symbolicatecrash来手动符号化crash log。<br>在处理之前，请依然将“.app“, “.dSYM”和 “.crash”文件放到同一个目录下。现在打开终端(Terminal)然后输入如下的命令：<br>export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer<br>然后输入命令：<br>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/PrivateFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash appName.crash appName.app &gt; appName.log<br>现在，符号化的crash log就保存在appName.log中了。<br>方法3 使用命令行工具atos<br>如果你有多个“.ipa”文件，多个”.dSYMB”文件，你并不太确定到底“dSYMB”文件对应哪个”.ipa”文件，那么，这个方法就非常适合你。<br>特别当你的应用发布到多个渠道的时候，你需要对不同渠道的crash文件，写一个自动化的分析脚本的时候，这个方法就极其有用。</p>
 
           
         
@@ -1005,7 +1489,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/18/常用的锁机制/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/flexBox布局/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yida">
@@ -1024,7 +1508,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/18/常用的锁机制/" itemprop="url">常用的锁机制</a></h1>
+                <a class="post-title-link" href="/2018/05/20/flexBox布局/" itemprop="url">Flex 布局</a></h1>
         
 
         <div class="post-meta">
@@ -1036,8 +1520,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-18T22:13:29+08:00">
-                2018-11-18
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-20T10:11:12+08:00">
+                2018-05-20
               </time>
             
 
@@ -1076,168 +1560,55 @@
       
         
           
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/18/面试准备/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yida">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="益达的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/18/面试准备/" itemprop="url">面试注意事项</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-18T22:13:29+08:00">
-                2018-11-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="心理准备"><a href="#心理准备" class="headerlink" title="心理准备"></a>心理准备</h1><h3 id="明确动机"><a href="#明确动机" class="headerlink" title="明确动机"></a>明确动机</h3><p>比如为什么要跳槽或你想从事什么内容? 马爸爸曾提及过三要素(钱、心、事), 你是否完全认同? 或是有其他的原因?<br>不鼓励轻易跳槽, 跳槽未必有利于你长期的发展, 还有就是像某东在就职经历这块卡的很严</p>
-<h3 id="优势是啥"><a href="#优势是啥" class="headerlink" title="优势是啥"></a>优势是啥</h3><p>面对其他候选人, 是否清楚自己的优势？比如你某方面技术突出、抗压能力更好、沟通能力更好等.</p>
-<h3 id="最坏打算"><a href="#最坏打算" class="headerlink" title="最坏打算"></a>最坏打算</h3><p>若决定离开, 那么便坚决离开, 没有回头路. 决定前做好最坏打算, 比如连续面试下来结果都不好, 是否能承受, 有无备选方案?</p>
-<h3 id="学会健忘"><a href="#学会健忘" class="headerlink" title="学会健忘"></a>学会健忘</h3><p>可能某几次面试结果不尽人意, 或是因为准备不足, 或是因为”气场不和”等等. 总之摆正心态, 忘记之前的面试结果, 对面试不足之处有针对性的去总结和提高, 然后接着面就好</p>
-<p>尤其对于”放长线作战”的同学, 个人推荐花时间搞清楚以上4点</p>
-<h1 id="物资准备"><a href="#物资准备" class="headerlink" title="物资准备"></a>物资准备</h1><p>“物资”直接决定面试的成败. 主要分为硬实力与软实力的体现</p>
-<h3 id="硬实力"><a href="#硬实力" class="headerlink" title="硬实力"></a>硬实力</h3><h4 id="通用技能"><a href="#通用技能" class="headerlink" title="通用技能"></a>通用技能</h4><ul>
-<li>数据结构, 算法(Sort、字符串、数组、位操作、回溯、双指针、DFS、BFS、DP、分治、二分查找..)</li>
-<li>设计模式(创建型、结构型、行为型设计模式)</li>
-<li>计算机网络(应用层/传输层协议、网络分层..)</li>
-<li>操作系统(进程、线程、内存布局..)</li>
-<li>编译原理(编译过程..)</li>
-</ul>
-<h4 id="iOS技能"><a href="#iOS技能" class="headerlink" title="iOS技能"></a>iOS技能</h4><ul>
-<li>修饰符, 可变不可变对象等基础</li>
-<li>Runtime</li>
-<li>RunLoop</li>
-<li>KVC、KVO原理</li>
-<li>block本质</li>
-<li>category本质</li>
-<li>内存管理</li>
-<li>事件传递</li>
-<li>App、VC、View、CALayer生命周期</li>
-<li>多线程(队列、锁)</li>
-<li>性能优化(体验优化、启动优化、网络优化、编译优化)</li>
-<li>主流组件化、模块化、架构方案</li>
-<li>Core Animation、屏幕渲染等</li>
-<li>数据持久化方案</li>
-<li>动态化方案(Hybird/RN/Weex/Flutter)</li>
-</ul>
-<h4 id="项目经历"><a href="#项目经历" class="headerlink" title="项目经历"></a>项目经历</h4><ul>
-<li>简历上写的</li>
-<li>主流三方库</li>
-</ul>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
-<li>算法大厂必考项目, 不过多描述, 推荐leetcode分类型进行算法思路的训练, 一般可以秒杀medium的题目足矣, 仅一次问到hard难度的题目</li>
-<li>iOS知识点考察, 仅知道是什么还不够, 更多的是为什么. 平时注意积累, 比如看源码, 博客文章(内容未必都对, 带着辩证思维去看)等. 另外印象笔记剪藏功能用于收藏回顾真的相当不错.</li>
-<li>面试官往往会由浅入深进行考察, 若不会就明确表示出来(吃过强答的亏, 印象分那是卡卡卡的掉.) 一定要多与面试官沟通, 倾听面试官把问题描述完, 若只是忘了细节争取能说下思路也好</li>
-</ul>
-<h1 id="职业发展"><a href="#职业发展" class="headerlink" title="职业发展"></a>职业发展</h1><p>这方面结合各位大佬赠与的宝贵建议简单概括一下</p>
-<h3 id="围绕核心"><a href="#围绕核心" class="headerlink" title="围绕核心"></a>围绕核心</h3><p>对于走技术路线的同学来说, 毫无疑问就是不断提升技术方面的深度以及广度</p>
-<h3 id="提高软实力"><a href="#提高软实力" class="headerlink" title="提高软实力"></a>提高软实力</h3><p>专业以外的能力, 具体前边也有提及, 比如学习方式的改进, 沟通能力的提高, 变得更靠谱等</p>
-<h3 id="承担更多"><a href="#承担更多" class="headerlink" title="承担更多"></a>承担更多</h3><p>不单单专注于完成分类之事或提高个人, 可以尝试放大格局, 主动去承担本分以外的职责, 比如思考并实践对整个团队或者整个公司层面有益的事</p>
+            <p>关于flex的布局：</p>
+<p>Webkit内核的浏览器，必须加上-webkit前缀<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.box&#123;</span><br><span class="line">  display: -webkit-flex; /* Safari */</span><br><span class="line">  display: flex;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="基础概念："><a href="#基础概念：" class="headerlink" title="基础概念："></a>基础概念：</h4><p><img src="http://www.runoob.com/wp-content/uploads/2015/07/3791e575c48b3698be6a94ae1dbff79d.png" alt=""></p>
+<p>容器默认存在两根轴：水平的主轴（main axis）和垂直的交叉轴（cross axis）。主轴的开始位置（与边框的交叉点）叫做main start，结束位置叫做main end；交叉轴的开始位置叫做cross start，结束位置叫做cross end。</p>
+<p>项目默认沿主轴排列。单个项目占据的主轴空间叫做main size，占据的交叉轴空间叫做cross size.</p>
+<h4 id="容器的属性："><a href="#容器的属性：" class="headerlink" title="容器的属性："></a>容器的属性：</h4><ol>
+<li>flex-direction属性决定主轴的方向（即项目的排列方向）。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">  flex-direction: row | row-reverse | column | column-reverse;</span><br><span class="line">&#125;</span><br><span class="line">row（默认值）：主轴为水平方向，起点在左端。</span><br><span class="line">row-reverse：主轴为水平方向，起点在右端。</span><br><span class="line">column：主轴为垂直方向，起点在上沿。</span><br><span class="line">column-reverse：主轴为垂直方向，起点在下沿。</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="http://www.runoob.com/wp-content/uploads/2015/07/0cbe5f8268121114e87d0546e53cda6e.png" alt=""></p>
+<ol start="2">
+<li>flex-wrap属性<br>默认情况下，项目都排在一条线（又称”轴线”）上。flex-wrap属性定义，如果一条轴线排不下，如何换行。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box&#123;</span><br><span class="line">  flex-wrap: nowrap | wrap | wrap-reverse;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>（1）nowrap（默认）：不换行。<br><img src="http://www.runoob.com/wp-content/uploads/2015/07/9da1f23965756568b4c6ea7124db7b9a.png" alt=""><br>（2）wrap：换行，第一行在上方。<br><img src="http://www.runoob.com/wp-content/uploads/2015/07/3c6b3c8b8fe5e26bca6fb57538cf72d9.jpg" alt=""><br>（3）wrap-reverse：换行，第一行在下方。<br><img src="http://www.runoob.com/wp-content/uploads/2015/07/fb4cf2bab8b6b744b64f6d7a99cd577c.jpg" alt=""></p>
+<ol start="3">
+<li><p>flex-flow<br>flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">  flex-flow: <span class="tag">&lt;<span class="name">flex-direction</span>&gt;</span> || <span class="tag">&lt;<span class="name">flex-wrap</span>&gt;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>justify-content属性<br>justify-content属性定义了项目在主轴上的对齐方式。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">  justify-content: flex-start | flex-end | center | space-between | space-around;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>flex-start（默认值）：左对齐<br>flex-end：右对齐<br>center： 居中<br>space-between：两端对齐，项目之间的间隔都相等。<br>space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。<br><img src="http://www.runoob.com/wp-content/uploads/2015/07/c55dfe8e3422458b50e985552ef13ba5.png" alt=""></p>
+<ol start="4">
+<li>align-items属性<br>align-items属性定义项目在交叉轴上如何对齐。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">  align-items: flex-start | flex-end | center | baseline | stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>flex-start：交叉轴的起点对齐。<br>flex-end：交叉轴的终点对齐。<br>center：交叉轴的中点对齐。<br>baseline: 项目的第一行文字的基线对齐。<br>stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。<br><img src="http://www.runoob.com/wp-content/uploads/2015/07/2b0c39c7e7a80d5a784c8c2ca63cde17.png" alt=""></p>
+<ol start="6">
+<li>align-content属性<br>align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.box &#123;</span><br><span class="line">  align-content: flex-start | flex-end | center | space-between | space-around | stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>flex-start：与交叉轴的起点对齐。<br>flex-end：与交叉轴的终点对齐。<br>center：与交叉轴的中点对齐。<br>space-between：与交叉轴两端对齐，轴线之间的间隔平均分布。<br>space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。<br>stretch（默认值）：轴线占满整个交叉轴。<br><img src="http://www.runoob.com/wp-content/uploads/2015/07/f10918ccb8a13247c9d47715a2bd2c33.png" alt=""></p>
+<h4 id="项目属性"><a href="#项目属性" class="headerlink" title="项目属性"></a>项目属性</h4><p>1.order属性<br>order属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">  order: <span class="tag">&lt;<span class="name">integer</span>&gt;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.runoob.com/wp-content/uploads/2015/07/59e399c72daafcfcc20ede36bf32f266.png" alt=""></p>
+<p>2.flex-grow属性<br>flex-grow属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">  flex-grow: <span class="tag">&lt;<span class="name">number</span>&gt;</span>; /* default 0 */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://www.runoob.com/wp-content/uploads/2015/07/f41c08bb35962ed79e7686f735d6cd78.png" alt=""><br>如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。</p>
+<p>3.flex-shrink属性<br>flex-shrink属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">  flex-shrink: <span class="tag">&lt;<span class="name">number</span>&gt;</span>; /* default 1 */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="http://www.runoob.com/wp-content/uploads/2015/07/240d3e960043a729bb3ff5e34987904f.jpg" alt=""><br>如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。如果一个项目的flex-shrink属性为0，其他项目都为1，则空间不足时，前者不缩小。<br>负值对该属性无效。</p>
+<p>4.flex-basis属性<br>flex-basis属性定义了在分配多余空间之前，项目占据的主轴空间（main size）。浏览器根据这个属性，计算主轴是否有多余空间。它的默认值为auto，即项目的本来大小。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">  flex-basis: <span class="tag">&lt;<span class="name">length</span>&gt;</span> | auto; /* default auto */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>它可以设为跟width或height属性一样的值（比如350px），则项目将占据固定空间。</p>
+<p>5.flex属性<br>flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">  flex: none | [ <span class="tag">&lt;<span class="name">'flex-grow'</span>&gt;</span> <span class="tag">&lt;<span class="name">'flex-shrink'</span>&gt;</span>? || <span class="tag">&lt;<span class="name">'flex-basis'</span>&gt;</span> ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>该属性有两个快捷值：auto (1 1 auto) 和 none (0 0 auto)。<br>建议优先使用这个属性，而不是单独写三个分离的属性，因为浏览器会推算相关值。</p>
+<p>6.align-self属性<br>align-self属性允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto，表示继承父元素的align-items属性，如果没有父元素，则等同于stretch。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">.item &#123;</span><br><span class="line">  align-self: auto | flex-start | flex-end | center | baseline | stretch;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="http://www.runoob.com/wp-content/uploads/2015/07/55b19171b8b6b9487d717bf2ecbba6de.png" alt=""></p>
+<p>该属性可能取6个值，除了auto，其他都与align-items属性完全一致。</p>
 
           
         
@@ -1286,7 +1657,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/18/模块化/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/10/关于Vue生成新的VirtualDOM/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="yida">
@@ -1305,7 +1676,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/11/18/模块化/" itemprop="url">面试注意事项</a></h1>
+                <a class="post-title-link" href="/2018/05/10/关于Vue生成新的VirtualDOM/" itemprop="url">Virtual dom知识点</a></h1>
         
 
         <div class="post-meta">
@@ -1317,8 +1688,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-18T22:13:29+08:00">
-                2018-11-18
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-10T10:11:12+08:00">
+                2018-05-10
               </time>
             
 
@@ -1357,253 +1728,29 @@
       
         
           
-            <h4 id="主流路由的设计方案"><a href="#主流路由的设计方案" class="headerlink" title="主流路由的设计方案"></a>主流路由的设计方案</h4><p>蘑菇街参考Limoy boy</p>
-<p><a href="https://limboy.me/tech/2016/03/14/mgj-components-continued.html" target="_blank" rel="noopener">https://limboy.me/tech/2016/03/14/mgj-components-continued.html</a></p>
-<p><a href="https://casatwy.com/iOS-Modulization.html" target="_blank" rel="noopener">https://casatwy.com/iOS-Modulization.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/21/响应事件链/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yida">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="益达的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/21/响应事件链/" itemprop="url">Untitled</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-21T13:21:29+08:00">
-                2018-09-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>关于常识的事件捕获；<br>pointInside:withEvent 检查坐标是否落在当前视图内；<br>responder提供对象具有响应处理的能力，UIView才是提供了可视载体和点击坐标关联的能力，查找响应实际上是查找点击坐标落点位置在其可视范围内具备处理事件能力的对象，响应者查找的顺序：<br>1.优先级更高的window优先匹配；<br>2.同一个window中从父视图向子视图寻找；</p>
-<p>hitTest:withEvent: 响应链的事件处理；；</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/21/CPU优化/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yida">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="益达的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/21/CPU优化/" itemprop="url">Untitled</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-09-21T13:21:27+08:00">
-                2018-09-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>CPU的资源消耗问题：</p>
-<p>尽量使用轻量对象代替，敏感的位置不能用IB尽量使用纯代码手写；</p>
-<p>视图层次调整，，添加和移除视图</p>
-<p>布局计算，获取到数据后，异步计算并缓存下来，复用cell的是直接调用缓存数据  </p>
+            <p>关于VUE切换成virtual dom的树的流程</p>
+<p>简单举例子：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const demo = new Vue(&#123;</span><br><span class="line">	data: &#123;</span><br><span class="line">    	text:"before",</span><br><span class="line">    &#125;</span><br><span class="line">    render(h) &#123;</span><br><span class="line">    	return h('div',&#123;&#125;,[</span><br><span class="line">        	h('span',&#123;&#125;,[this.__toString__(this.text)])</span><br><span class="line">        ])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line">setTimeout(function()&#123;</span><br><span class="line">	demo.text = "afer"</span><br><span class="line">&#125;,3000)</span><br></pre></td></tr></table></figure></p>
+<p>对应的虚拟dom的变化;;before-&gt;after的变化<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>before<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>after<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>监听data下的所有属性的变化,data的属性变化，如何触发对应的函数；；<br>ES5提供了新的方法，Object.defineProperty。根据这个方法，可以自定getter和setter函数，那么在获取对象属性后设置对象属性就能直接执行响应的回调函数；；</p>
+<p>语法Object.defineProperty方法会直接定义在一个新的属性上，或者修改一个对象的现有属性，并返回这个对象。<br>Object.defineProperty(obj,prop,description);<br>obj定义对象的属性；；prop 定义或者修改的属性  description 被定义和描述</p>
+<p>底层Vue类的定义：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Vue &#123;</span><br><span class="line">  constructor(options) &#123;</span><br><span class="line">    this.$options = options</span><br><span class="line">    this._data = options.data</span><br><span class="line">    observer(options.data, this._update.bind(this))</span><br><span class="line">    this._update()</span><br><span class="line">  &#125;</span><br><span class="line">  _update()&#123;</span><br><span class="line">    this.$options.render()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function observer(obj, cb) &#123;</span><br><span class="line">  Object.keys(obj).forEach((key) =&gt; &#123;</span><br><span class="line">    defineReactive(obj, key, obj[key], cb)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">改造后的方案：</span><br><span class="line">function observer(obj, cb) &#123;</span><br><span class="line">  Object.keys(obj).forEach((key) =&gt; &#123;</span><br><span class="line">  	if(typeof obj[key] === 'object') &#123;</span><br><span class="line">    	new obser</span><br><span class="line">    &#125;</span><br><span class="line">    defineReactive(obj, key, obj[key], cb)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">function defineReactive(obj, key, val, cb) &#123;</span><br><span class="line">  Object.defineProperty(obj, key, &#123;</span><br><span class="line">    enumerable: true,</span><br><span class="line">    configurable: true,</span><br><span class="line">    get: () =&gt; &#123;</span><br><span class="line">      console.log('你访问了' + key)</span><br><span class="line">      return val</span><br><span class="line">    &#125;,</span><br><span class="line">    set: newVal =&gt; &#123;</span><br><span class="line">      if (newVal === val)</span><br><span class="line">        return</span><br><span class="line">      console.log('你设置了' + key)</span><br><span class="line">      console.log('新的' + key + ' = ' + newVal)</span><br><span class="line">      val = newVal</span><br><span class="line">      cb()</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var demo1 = new Vue(&#123;</span><br><span class="line">  el: '#demo',</span><br><span class="line">  data: &#123;</span><br><span class="line">    text: "before"</span><br><span class="line">  &#125;,</span><br><span class="line">  render()&#123;</span><br><span class="line">    console.log("我要render了")</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">var demo2 = new Vue(&#123;</span><br><span class="line">	el:'#demo2',</span><br><span class="line">    data: &#123;</span><br><span class="line">    	text: 'before',</span><br><span class="line">        o: &#123;</span><br><span class="line">        	text:'o-before'</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    render() &#123;</span><br><span class="line">    	console.log('我要render')</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>添加代理<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">_proxy(key) &#123;</span><br><span class="line">  const self = this</span><br><span class="line">  Object.defineProperty(self, key, &#123;</span><br><span class="line">    configurable: true,</span><br><span class="line">    enumerable: true,</span><br><span class="line">    get: function proxyGetter() &#123;</span><br><span class="line">      return self._data[key]</span><br><span class="line">    &#125;,</span><br><span class="line">    set: function proxySetter(val) &#123;</span><br><span class="line">      self._data[key] = val</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">在构造函数中添加如下代码</span><br><span class="line"></span><br><span class="line">Object.keys(options.data).forEach(key =&gt; this._proxy(key))</span><br></pre></td></tr></table></figure></p>
+<h4 id="转换响应式工作完工"><a href="#转换响应式工作完工" class="headerlink" title="转换响应式工作完工"></a>转换响应式工作完工</h4><ol>
+<li>只要 data 的属性发生变化，就会触发 render 函数</li>
+<li>这也是为什么只有 data 中的属性是响应式的，而其他地方声明的值不是的原因</li>
+</ol>
+<p>但是这里有个问题 ？即触发 render 函数的准确度问题？</p>
+<h3 id="第二步-解决准确度问题，引出虚拟dom"><a href="#第二步-解决准确度问题，引出虚拟dom" class="headerlink" title="第二步,解决准确度问题，引出虚拟dom"></a>第二步,解决准确度问题，引出虚拟dom</h3><p>思考下边的 demo<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">new Vue(&#123;</span><br><span class="line">  template: `</span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">span</span>&gt;</span>name:<span class="tag">&lt;/<span class="name">span</span>&gt;</span> &#123; &#123;name&#125; &#125;</span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>`,</span><br><span class="line">  data: &#123;</span><br><span class="line">    name: 'js',</span><br><span class="line">    age: 24</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">setTimeout(function()&#123;</span><br><span class="line">  demo.age = 25</span><br><span class="line">&#125;, 3000)</span><br></pre></td></tr></table></figure></p>
+<h3 id="引入虚拟demo"><a href="#引入虚拟demo" class="headerlink" title="引入虚拟demo"></a>引入虚拟demo</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">vue的两种写法</span><br><span class="line">// template模板写法（最常用的）</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    text: "before",</span><br><span class="line">  &#125;,</span><br><span class="line">  template: `</span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">span</span>&gt;</span>text:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span>`</span><br><span class="line">&#125;)</span><br><span class="line">// render函数写法，类似react的jsx写法</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    text: "before",</span><br><span class="line">  &#125;,</span><br><span class="line">  render (h) &#123;</span><br><span class="line">    return (</span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">span</span>&gt;</span>text:<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">转化成下面的格式</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    text: "before",</span><br><span class="line">  &#125;,</span><br><span class="line">  render()&#123;</span><br><span class="line">    return this.__h__('div', &#123;&#125;, [</span><br><span class="line">      this.__h__('span', &#123;&#125;, [this.__toString__(this.text)])</span><br><span class="line">    ])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">虚拟dom的生成</span><br><span class="line">new Vue(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    text: "before",</span><br><span class="line">  &#125;,</span><br><span class="line">  render()&#123;</span><br><span class="line">    return this.__h__('div', &#123;&#125;, [</span><br><span class="line">      this.__h__('span', &#123;&#125;, [this.__toString__(this.text)])</span><br><span class="line">    ])</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">function VNode(tag, data, children, text) &#123;</span><br><span class="line">  return &#123;</span><br><span class="line">    tag: tag,</span><br><span class="line">    data: data,</span><br><span class="line">    children: children,</span><br><span class="line">    text: text</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Vue &#123;</span><br><span class="line">  constructor(options) &#123;</span><br><span class="line">    this.$options = options</span><br><span class="line">    const vdom = this._update()</span><br><span class="line">    console.log(vdom)</span><br><span class="line">  &#125;</span><br><span class="line">  _update() &#123;</span><br><span class="line">    return this._render.call(this)</span><br><span class="line">  &#125;</span><br><span class="line">  _render() &#123;</span><br><span class="line">    const vnode = this.$options.render.call(this)</span><br><span class="line">    return vnode</span><br><span class="line">  &#125;</span><br><span class="line">  __h__(tag, attr, children) &#123;</span><br><span class="line">    return VNode(tag, attr, children.map((child)=&gt;&#123;</span><br><span class="line">      if(typeof child === 'string')&#123;</span><br><span class="line">        return VNode(undefined, undefined, undefined, child)</span><br><span class="line">      &#125;else&#123;</span><br><span class="line">        return child</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;))</span><br><span class="line">  &#125;</span><br><span class="line">  __toString__(val) &#123;</span><br><span class="line">    return val == null ? '' : typeof val === 'object' ? JSON.stringify(val, null, 2) : String(val);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>回头看问题<br>我们需要知道 render 函数中依赖了 data 中的哪些属性，只有这些属性变化，才需要去触发 render 函数</p>
+<h3 id="第三步，依赖收集，准确渲染"><a href="#第三步，依赖收集，准确渲染" class="headerlink" title="第三步，依赖收集，准确渲染"></a>第三步，依赖收集，准确渲染</h3><p>思路： 在这之前，我们已经把 data 中的属性改成响应式了，当去获取或者修改这些变量时便能够触发相应函数。那这里就可以利用这个相应的函数做些手脚了。<br>当声明一个 vue 对象时，在执行 render 函数获取虚拟dom的这个过程中，已经对 render 中依赖的 data 属性进行了一次获取操作，这次获取操作便可以拿到所有依赖。<br>其实不仅是 render，任何一个变量的改别，是因为别的变量改变引起(观察者模式)，都可以用上述方法，也就是 computed 和 watch 的原理</p>
+<p>依赖收集<br>首先需要写一个依赖收集的类，每一个data中的属性都有可能被依赖，因此每个属性在响应式转化(defineReactive)的时候，就初始化它。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">class Dep &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this.subs = []</span><br><span class="line">  &#125;</span><br><span class="line">  add(cb) &#123;</span><br><span class="line">    this.subs.push(cb)</span><br><span class="line">  &#125;</span><br><span class="line">  notify() &#123;</span><br><span class="line">    console.log(this.subs)</span><br><span class="line">    this.subs.forEach((cb) =&gt; cb())</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function defineReactive(obj, key, val, cb) &#123;</span><br><span class="line">  const dep = new Dep()</span><br><span class="line">  Object.defineProperty(obj, key, &#123;</span><br><span class="line">    // 省略</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line">class Dep &#123;</span><br><span class="line">  constructor() &#123;</span><br><span class="line">    this.subs = []</span><br><span class="line">  &#125;</span><br><span class="line">  add(cb) &#123;</span><br><span class="line">    this.subs.push(cb)</span><br><span class="line">  &#125;</span><br><span class="line">  notify() &#123;</span><br><span class="line">    console.log(this.subs)</span><br><span class="line">    this.subs.forEach((cb) =&gt; cb())</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>执行过程<br>当执行render函数的时候，依赖到的变量的get就会被执行，然后就把这个 render函数加到subs里面去。<br>当set的时候,就执行notify，将所有的subs数组里的函数执行，其中就包含render的执行。<br>代码中有一个Dep.target值，这个值时用来区分是普通的get还是收集依赖时的get<br>完整代码： <a href="https://github.com/SirM2z/assets/blob/master/vue-demo.js" target="_blank" rel="noopener">https://github.com/SirM2z/assets/blob/master/vue-demo.js</a></p>
+<p>vue react响应式简单对比<br>综上发现： 用Object.defineProperty这个特性可以精确的写出订阅发布模式，从这点来说，vue是优于react的，在没经过优化之前，vue的渲染机制一定是比react更加准确的，为了验证这一说法，我用两个框架同时写了两个相同的简单项目进行对比。</p>
+<p>没有对比就没有伤害<br>react项目地址：<a href="http://sirm2z.github.io/react-vue-test/react/index.html" target="_blank" rel="noopener">http://sirm2z.github.io/react-vue-test/react/index.html</a><br>vue项目地址：<a href="http://sirm2z.github.io/react-vue-test/vue/index.html" target="_blank" rel="noopener">http://sirm2z.github.io/react-vue-test/vue/index.html</a><br>通过对比发现，react 在正常使用的过程中产生了多余的渲染，在移动端或者组件嵌套非常深的情况下会产生非常大的性能消耗，因此在使用 react 的过程中，写好 react 生命周期中的 shouldComponentUpdate 是非常重要的！</p>
+<p>所有资源<br>完整代码： <a href="https://github.com/SirM2z/assets/blob/master/vue-demo.js" target="_blank" rel="noopener">https://github.com/SirM2z/assets/blob/master/vue-demo.js</a><br>PPT网址： <a href="http://sirm2z.github.io/vue-demo-ppt/index.html" target="_blank" rel="noopener">http://sirm2z.github.io/vue-demo-ppt/index.html</a><br>博客文章网址： <a href="http://www.jianshu.com/p/7374c4e91891" target="_blank" rel="noopener">http://www.jianshu.com/p/7374c4e91891</a><br>react项目地址： <a href="http://sirm2z.github.io/react-vue-test/react/index.html" target="_blank" rel="noopener">http://sirm2z.github.io/react-vue-test/react/index.html</a><br>vue项目地址： <a href="http://sirm2z.github.io/react-vue-test/vue/index.html" target="_blank" rel="noopener">http://sirm2z.github.io/react-vue-test/vue/index.html</a></p>
 
           
         
@@ -1643,7 +1790,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1689,7 +1836,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">47</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
