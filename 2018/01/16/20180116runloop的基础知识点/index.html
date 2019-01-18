@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="关于runloop的定义： Runloop是事件接收和分发机制的一个实现。是线程相关的基础框架的一部分。一个Runloop就是一个事件处理的循环，用来不停的调度工作及处理输入事件。使用runloop的目的就是让你的线程 RunLoop的主要目的 保证程序执行的线程不会被系统终止，如果没有RunLoop，UIApplicationMain函数执行完毕之后将直接返回，就是说程序一启动然后就结束,在有工">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Runloop的定义">
+<meta property="og:url" content="http://yoursite.com/2018/01/16/20180116runloop的基础知识点/index.html">
+<meta property="og:site_name" content="益达的博客">
+<meta property="og:description" content="关于runloop的定义： Runloop是事件接收和分发机制的一个实现。是线程相关的基础框架的一部分。一个Runloop就是一个事件处理的循环，用来不停的调度工作及处理输入事件。使用runloop的目的就是让你的线程 RunLoop的主要目的 保证程序执行的线程不会被系统终止，如果没有RunLoop，UIApplicationMain函数执行完毕之后将直接返回，就是说程序一启动然后就结束,在有工">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/1/10/1683693a9491e84c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:updated_time" content="2019-01-18T15:04:54.958Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Runloop的定义">
+<meta name="twitter:description" content="关于runloop的定义： Runloop是事件接收和分发机制的一个实现。是线程相关的基础框架的一部分。一个Runloop就是一个事件处理的循环，用来不停的调度工作及处理输入事件。使用runloop的目的就是让你的线程 RunLoop的主要目的 保证程序执行的线程不会被系统终止，如果没有RunLoop，UIApplicationMain函数执行完毕之后将直接返回，就是说程序一启动然后就结束,在有工">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/1/10/1683693a9491e84c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/16/20180116runloop的基础知识点/">
+
+
+
+
+
+  <title>Runloop的定义 | 益达的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">益达的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/16/20180116runloop的基础知识点/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yida">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="益达的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Runloop的定义</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-16T10:11:12+08:00">
+                2018-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>关于runloop的定义：</p>
+<p><code>Runloop</code>是事件接收和分发机制的一个实现。是线程相关的基础框架的一部分。一个Runloop就是一个事件处理的循环，用来不停的调度工作及处理输入事件。使用runloop的目的就是让你的线程</p>
+<p><code>RunLoop</code>的主要目的</p>
+<p>保证程序执行的线程不会被系统终止，如果没有RunLoop，UIApplicationMain函数执行完毕之后将直接返回，就是说程序一启动然后就结束,在有工作的时候忙于工作，而没有工作的时候处于休眠状态；</p>
+<p>什么时候使用<code>Runloop</code></p>
+<p>当需要和该线程进行交互的时候才会使用Runloop；</p>
+<h3 id="Runloop-Mode"><a href="#Runloop-Mode" class="headerlink" title="Runloop Mode"></a>Runloop Mode</h3><p><code>Runloop Mode</code> 实际上是 <code>Source</code>，<code>Timer</code> 和 <code>Observer</code> 的集合，不同的 Mode 把不同组的 <code>Source</code>，<code>Timer</code> 和 <code>Observer</code> 隔绝开来。<code>Runloop</code> 在某个时刻只能跑在一个 Mode 下，处理这一个 Mode 当中的 Source，Timer 和 Observer。</p>
+<p>苹果中能提到的Mode有5个，分别是：</p>
+<ul>
+<li><code>NSDefaultRunLoopMode</code>：默认的mode，正常情况下都是在这个mode</li>
+<li><code>NSConnectionReplyMode</code></li>
+<li><code>NSModalPanelRunLoopMode</code></li>
+<li><code>NSEventTrackingRunLoopMode</code>：使用这个Mode去跟踪来自用户交互的事件（比如UITableView上下滑动）</li>
+<li><code>NSRunLoopCommonModes</code></li>
+</ul>
+<p>iOS 中公开暴露出来的只有 <code>NSDefaultRunLoopMode</code> 和 <code>NSRunLoopCommonModes</code>。 <code>NSRunLoopCommonModes</code> 实际上是一个 Mode 的集合，默认包括 <code>NSDefaultRunLoopMode</code> 和 <code>NSEventTrackingRunLoopMode</code>。</p>
+<h4 id="Source"><a href="#Source" class="headerlink" title="Source"></a>Source</h4><p>即可以唤醒<code>Runloop</code>的一些事件。比如用户点击了屏幕，就会创建一个input source。</p>
+<ul>
+<li><code>source0</code> ： 非系统事件</li>
+</ul>
+<p>只包含了一个回调（函数指针），它并不能主动触发事件。使用时，你需要先调用 CFRunLoopSourceSignal(source)，将这个 Source 标记为待处理，然后手动调用 CFRunLoopWakeUp(runloop) 来唤醒 RunLoop，让其处理这个事件。</p>
+<ul>
+<li><code>source1</code> ： 系统事件</li>
+</ul>
+<p>包含了一个 mach_port和一个回调（函数指针），被用于通过内核和其他线程相互发送消息。这种 Source 能主动唤醒 RunLoop 的线程</p>
+<h4 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h4><p>我们经常用的<code>NSTimer</code>就属于这一类。</p>
+<h4 id="Observer"><a href="#Observer" class="headerlink" title="Observer"></a>Observer</h4><p>某个observer可以监听<code>runloop</code>的状态变化，并作出一定反应。</p>
+<h3 id="RunLoop运行流程"><a href="#RunLoop运行流程" class="headerlink" title="RunLoop运行流程"></a>RunLoop运行流程</h3><p>经典大图</p>
+<p>![](Timer</p>
+<p>我们经常用的<code>NSTimer</code>就属于这一类。</p>
+<h4 id="Observer-1"><a href="#Observer-1" class="headerlink" title="Observer"></a>Observer</h4><p>某个observer可以监听<code>runloop</code>的状态变化，并作出一定反应。</p>
+<h3 id="RunLoop运行流程-1"><a href="#RunLoop运行流程-1" class="headerlink" title="RunLoop运行流程"></a>RunLoop运行流程</h3><p>经典大图</p>
+<p>![](Timer</p>
+<p>我们经常用的<code>NSTimer</code>就属于这一类。</p>
+<h4 id="Observer-2"><a href="#Observer-2" class="headerlink" title="Observer"></a>Observer</h4><p>某个observer可以监听<code>runloop</code>的状态变化，并作出一定反应。</p>
+<h3 id="RunLoop运行流程-2"><a href="#RunLoop运行流程-2" class="headerlink" title="RunLoop运行流程"></a>RunLoop运行流程</h3><p>经典大图</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/1/10/1683693a9491e84c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>没有事情的时候，<code>Runloop</code>处于休眠状态。当外部source将其唤醒后，它会依次处理接收到的timer/source，然后再次进入休眠。</p>
+<h4 id="Runloop和线程是什么关系？"><a href="#Runloop和线程是什么关系？" class="headerlink" title="Runloop和线程是什么关系？"></a><code>Runloop</code>和线程是什么关系？</h4><blockquote>
+<p>每条线程都有唯一的一个与之对应的RunLoop对象，其关系是保存在一个全局的 Dictionary 里；主线程的RunLoop已经自动创建，子线程的RunLoop需要主动创建；RunLoop在第一次获取时创建，在线程结束时销毁</p>
+</blockquote>
+<h4 id="Runloop的mode作用是什么？"><a href="#Runloop的mode作用是什么？" class="headerlink" title="Runloop的mode作用是什么？"></a><code>Runloop</code>的mode作用是什么？</h4><blockquote>
+<p>指定事件在运行循环中的优先级的，</p>
+</blockquote>
+<blockquote>
+<p>线程的运行需要不同的模式，去响应各种不同的事件，去处理不同情境模式。(比如可以优化tableview的时候可以设置UITrackingRunLoopMode下不进行一些操作，比如设置图片等。)</p>
+</blockquote>
+<h4 id="以-scheduledTimerWithTimeInterval-的方式触发的timer，在滑动页面上的列表时，timer会暂停回调，-为什么？"><a href="#以-scheduledTimerWithTimeInterval-的方式触发的timer，在滑动页面上的列表时，timer会暂停回调，-为什么？" class="headerlink" title="以+scheduledTimerWithTimeInterval:的方式触发的timer，在滑动页面上的列表时，timer会暂停回调， 为什么？"></a>以<code>+scheduledTimerWithTimeInterval:</code>的方式触发的<code>timer</code>，在滑动页面上的列表时，<code>timer</code>会暂停回调， 为什么？</h4><blockquote>
+<p>滑动scrollView时，主线程的<code>RunLoop</code>会切换到<code>UITrackingRunLoopMode</code>这个Mode，执行的也是<code>UITrackingRunLoopMode</code>下的任务（Mode中的item），而timer是添加在<code>NSDefaultRunLoopMode</code>下的，所以timer任务并不会执行，只有当<code>UITrackingRunLoopMode</code>的任务执行完毕，runloop切换到<code>NSDefaultRunLoopMode</code>后，才会继续执行timer。</p>
+</blockquote>
+<h4 id="如何解决在滑动页面上的列表时，timer会暂停回调？"><a href="#如何解决在滑动页面上的列表时，timer会暂停回调？" class="headerlink" title="如何解决在滑动页面上的列表时，timer会暂停回调？"></a>如何解决在滑动页面上的列表时，timer会暂停回调？</h4><blockquote>
+<p>将<code>Timer</code>放到<code>NSRunLoopCommonModes</code>中执行即可</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];</span><br><span class="line">[[NSRunLoop currentRunLoop] run];</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h4 id="NSTImer使用时需要注意什么？"><a href="#NSTImer使用时需要注意什么？" class="headerlink" title="NSTImer使用时需要注意什么？"></a><code>NSTImer</code>使用时需要注意什么？</h4><ul>
+<li>注意timer添加到runloop时应该设置为什么mode</li>
+<li>注意timer在不需要时，一定要调用invalidate方法使定时器失效，否则得不到释放</li>
+</ul>
+<h4 id="RunLoop-有哪些应用？"><a href="#RunLoop-有哪些应用？" class="headerlink" title="RunLoop 有哪些应用？"></a><code>RunLoop</code> 有哪些应用？</h4><blockquote>
+<p>常驻内存、AutoreleasePool 自动释放池</p>
+</blockquote>
+<h4 id="AutoreleasePool-和-RunLoop-有什么联系？"><a href="#AutoreleasePool-和-RunLoop-有什么联系？" class="headerlink" title="AutoreleasePool 和 RunLoop 有什么联系？"></a><code>AutoreleasePool</code> 和 <code>RunLoop</code> 有什么联系？</h4><blockquote>
+<p>iOS应用启动后会注册两个 Observer 管理和维护 AutoreleasePool。应用程序刚刚启动时默认注册了很多个Observer，其中有两个Observer的 callout 都是 _ wrapRunLoopWithAutoreleasePoolHandler，这两个是和自动释放池相关的两个监听。</p>
+</blockquote>
+<ul>
+<li>第一个 Observer 会监听 RunLoop 的进入，它会回调objc_autoreleasePoolPush() 向当前的 AutoreleasePoolPage 增加一个哨兵对象标志创建自动释放池。这个 Observer 的 order 是 -2147483647 优先级最高，确保发生在所有回调操作之前。</li>
+<li>第二个 Observer 会监听 RunLoop 的进入休眠和即将退出 RunLoop 两种状态，在即将进入休眠时会调用 objc_autoreleasePoolPop() 和 objc_autoreleasePoolPush() 根据情况从最新加入的对象一直往前清理直到遇到哨兵对象。而在即将退出 RunLoop 时会调用objc_autoreleasePoolPop() 释放自动自动释放池内对象。这个Observer 的 order 是 2147483647 ，优先级最低，确保发生在所有回调操作之后。</li>
+</ul>
+<h4 id="NSRunLoop-和-CFRunLoopRef-区别"><a href="#NSRunLoop-和-CFRunLoopRef-区别" class="headerlink" title="NSRunLoop 和 CFRunLoopRef 区别"></a>NSRunLoop 和 CFRunLoopRef 区别</h4><blockquote>
+<p>CFRunLoopRef 基于C 线程安全，NSRunLoop 基于 CFRunLoopRef 面向对象的API 是不安全的</p>
+</blockquote>
+<p>### </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/15/20180115Mac上常见的明令管理库/" rel="next" title="Mac 工具库">
+                <i class="fa fa-chevron-left"></i> Mac 工具库
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/18/20180118Block的定义分析/" rel="prev" title="Block">
+                Block <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">yida</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Runloop-Mode"><span class="nav-number">1.</span> <span class="nav-text">Runloop Mode</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Source"><span class="nav-number">1.1.</span> <span class="nav-text">Source</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Timer"><span class="nav-number">1.2.</span> <span class="nav-text">Timer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Observer"><span class="nav-number">1.3.</span> <span class="nav-text">Observer</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RunLoop运行流程"><span class="nav-number">2.</span> <span class="nav-text">RunLoop运行流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Observer-1"><span class="nav-number">2.1.</span> <span class="nav-text">Observer</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RunLoop运行流程-1"><span class="nav-number">3.</span> <span class="nav-text">RunLoop运行流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Observer-2"><span class="nav-number">3.1.</span> <span class="nav-text">Observer</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RunLoop运行流程-2"><span class="nav-number">4.</span> <span class="nav-text">RunLoop运行流程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Runloop和线程是什么关系？"><span class="nav-number">4.1.</span> <span class="nav-text">Runloop和线程是什么关系？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Runloop的mode作用是什么？"><span class="nav-number">4.2.</span> <span class="nav-text">Runloop的mode作用是什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#以-scheduledTimerWithTimeInterval-的方式触发的timer，在滑动页面上的列表时，timer会暂停回调，-为什么？"><span class="nav-number">4.3.</span> <span class="nav-text">以+scheduledTimerWithTimeInterval:的方式触发的timer，在滑动页面上的列表时，timer会暂停回调， 为什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何解决在滑动页面上的列表时，timer会暂停回调？"><span class="nav-number">4.4.</span> <span class="nav-text">如何解决在滑动页面上的列表时，timer会暂停回调？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSTImer使用时需要注意什么？"><span class="nav-number">4.5.</span> <span class="nav-text">NSTImer使用时需要注意什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RunLoop-有哪些应用？"><span class="nav-number">4.6.</span> <span class="nav-text">RunLoop 有哪些应用？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AutoreleasePool-和-RunLoop-有什么联系？"><span class="nav-number">4.7.</span> <span class="nav-text">AutoreleasePool 和 RunLoop 有什么联系？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NSRunLoop-和-CFRunLoopRef-区别"><span class="nav-number">4.8.</span> <span class="nav-text">NSRunLoop 和 CFRunLoopRef 区别</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yida</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

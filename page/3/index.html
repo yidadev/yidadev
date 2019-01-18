@@ -229,6 +229,455 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/16/20180116runloop的基础知识点/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yida">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="益达的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/16/20180116runloop的基础知识点/" itemprop="url">Runloop的定义</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-16T10:11:12+08:00">
+                2018-01-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>关于runloop的定义：</p>
+<p><code>Runloop</code>是事件接收和分发机制的一个实现。是线程相关的基础框架的一部分。一个Runloop就是一个事件处理的循环，用来不停的调度工作及处理输入事件。使用runloop的目的就是让你的线程</p>
+<p><code>RunLoop</code>的主要目的</p>
+<p>保证程序执行的线程不会被系统终止，如果没有RunLoop，UIApplicationMain函数执行完毕之后将直接返回，就是说程序一启动然后就结束,在有工作的时候忙于工作，而没有工作的时候处于休眠状态；</p>
+<p>什么时候使用<code>Runloop</code></p>
+<p>当需要和该线程进行交互的时候才会使用Runloop；</p>
+<h3 id="Runloop-Mode"><a href="#Runloop-Mode" class="headerlink" title="Runloop Mode"></a>Runloop Mode</h3><p><code>Runloop Mode</code> 实际上是 <code>Source</code>，<code>Timer</code> 和 <code>Observer</code> 的集合，不同的 Mode 把不同组的 <code>Source</code>，<code>Timer</code> 和 <code>Observer</code> 隔绝开来。<code>Runloop</code> 在某个时刻只能跑在一个 Mode 下，处理这一个 Mode 当中的 Source，Timer 和 Observer。</p>
+<p>苹果中能提到的Mode有5个，分别是：</p>
+<ul>
+<li><code>NSDefaultRunLoopMode</code>：默认的mode，正常情况下都是在这个mode</li>
+<li><code>NSConnectionReplyMode</code></li>
+<li><code>NSModalPanelRunLoopMode</code></li>
+<li><code>NSEventTrackingRunLoopMode</code>：使用这个Mode去跟踪来自用户交互的事件（比如UITableView上下滑动）</li>
+<li><code>NSRunLoopCommonModes</code></li>
+</ul>
+<p>iOS 中公开暴露出来的只有 <code>NSDefaultRunLoopMode</code> 和 <code>NSRunLoopCommonModes</code>。 <code>NSRunLoopCommonModes</code> 实际上是一个 Mode 的集合，默认包括 <code>NSDefaultRunLoopMode</code> 和 <code>NSEventTrackingRunLoopMode</code>。</p>
+<h4 id="Source"><a href="#Source" class="headerlink" title="Source"></a>Source</h4><p>即可以唤醒<code>Runloop</code>的一些事件。比如用户点击了屏幕，就会创建一个input source。</p>
+<ul>
+<li><code>source0</code> ： 非系统事件</li>
+</ul>
+<p>只包含了一个回调（函数指针），它并不能主动触发事件。使用时，你需要先调用 CFRunLoopSourceSignal(source)，将这个 Source 标记为待处理，然后手动调用 CFRunLoopWakeUp(runloop) 来唤醒 RunLoop，让其处理这个事件。</p>
+<ul>
+<li><code>source1</code> ： 系统事件</li>
+</ul>
+<p>包含了一个 mach_port和一个回调（函数指针），被用于通过内核和其他线程相互发送消息。这种 Source 能主动唤醒 RunLoop 的线程</p>
+<h4 id="Timer"><a href="#Timer" class="headerlink" title="Timer"></a>Timer</h4><p>我们经常用的<code>NSTimer</code>就属于这一类。</p>
+<h4 id="Observer"><a href="#Observer" class="headerlink" title="Observer"></a>Observer</h4><p>某个observer可以监听<code>runloop</code>的状态变化，并作出一定反应。</p>
+<h3 id="RunLoop运行流程"><a href="#RunLoop运行流程" class="headerlink" title="RunLoop运行流程"></a>RunLoop运行流程</h3><p>经典大图</p>
+<p>![](Timer</p>
+<p>我们经常用的<code>NSTimer</code>就属于这一类。</p>
+<h4 id="Observer-1"><a href="#Observer-1" class="headerlink" title="Observer"></a>Observer</h4><p>某个observer可以监听<code>runloop</code>的状态变化，并作出一定反应。</p>
+<h3 id="RunLoop运行流程-1"><a href="#RunLoop运行流程-1" class="headerlink" title="RunLoop运行流程"></a>RunLoop运行流程</h3><p>经典大图</p>
+<p>![](Timer</p>
+<p>我们经常用的<code>NSTimer</code>就属于这一类。</p>
+<h4 id="Observer-2"><a href="#Observer-2" class="headerlink" title="Observer"></a>Observer</h4><p>某个observer可以监听<code>runloop</code>的状态变化，并作出一定反应。</p>
+<h3 id="RunLoop运行流程-2"><a href="#RunLoop运行流程-2" class="headerlink" title="RunLoop运行流程"></a>RunLoop运行流程</h3><p>经典大图</p>
+<p><img src="https://user-gold-cdn.xitu.io/2019/1/10/1683693a9491e84c?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>没有事情的时候，<code>Runloop</code>处于休眠状态。当外部source将其唤醒后，它会依次处理接收到的timer/source，然后再次进入休眠。</p>
+<h4 id="Runloop和线程是什么关系？"><a href="#Runloop和线程是什么关系？" class="headerlink" title="Runloop和线程是什么关系？"></a><code>Runloop</code>和线程是什么关系？</h4><blockquote>
+<p>每条线程都有唯一的一个与之对应的RunLoop对象，其关系是保存在一个全局的 Dictionary 里；主线程的RunLoop已经自动创建，子线程的RunLoop需要主动创建；RunLoop在第一次获取时创建，在线程结束时销毁</p>
+</blockquote>
+<h4 id="Runloop的mode作用是什么？"><a href="#Runloop的mode作用是什么？" class="headerlink" title="Runloop的mode作用是什么？"></a><code>Runloop</code>的mode作用是什么？</h4><blockquote>
+<p>指定事件在运行循环中的优先级的，</p>
+</blockquote>
+<blockquote>
+<p>线程的运行需要不同的模式，去响应各种不同的事件，去处理不同情境模式。(比如可以优化tableview的时候可以设置UITrackingRunLoopMode下不进行一些操作，比如设置图片等。)</p>
+</blockquote>
+<h4 id="以-scheduledTimerWithTimeInterval-的方式触发的timer，在滑动页面上的列表时，timer会暂停回调，-为什么？"><a href="#以-scheduledTimerWithTimeInterval-的方式触发的timer，在滑动页面上的列表时，timer会暂停回调，-为什么？" class="headerlink" title="以+scheduledTimerWithTimeInterval:的方式触发的timer，在滑动页面上的列表时，timer会暂停回调， 为什么？"></a>以<code>+scheduledTimerWithTimeInterval:</code>的方式触发的<code>timer</code>，在滑动页面上的列表时，<code>timer</code>会暂停回调， 为什么？</h4><blockquote>
+<p>滑动scrollView时，主线程的<code>RunLoop</code>会切换到<code>UITrackingRunLoopMode</code>这个Mode，执行的也是<code>UITrackingRunLoopMode</code>下的任务（Mode中的item），而timer是添加在<code>NSDefaultRunLoopMode</code>下的，所以timer任务并不会执行，只有当<code>UITrackingRunLoopMode</code>的任务执行完毕，runloop切换到<code>NSDefaultRunLoopMode</code>后，才会继续执行timer。</p>
+</blockquote>
+<h4 id="如何解决在滑动页面上的列表时，timer会暂停回调？"><a href="#如何解决在滑动页面上的列表时，timer会暂停回调？" class="headerlink" title="如何解决在滑动页面上的列表时，timer会暂停回调？"></a>如何解决在滑动页面上的列表时，timer会暂停回调？</h4><blockquote>
+<p>将<code>Timer</code>放到<code>NSRunLoopCommonModes</code>中执行即可</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];</span><br><span class="line">[[NSRunLoop currentRunLoop] run];</span><br><span class="line">复制代码</span><br></pre></td></tr></table></figure>
+<h4 id="NSTImer使用时需要注意什么？"><a href="#NSTImer使用时需要注意什么？" class="headerlink" title="NSTImer使用时需要注意什么？"></a><code>NSTImer</code>使用时需要注意什么？</h4><ul>
+<li>注意timer添加到runloop时应该设置为什么mode</li>
+<li>注意timer在不需要时，一定要调用invalidate方法使定时器失效，否则得不到释放</li>
+</ul>
+<h4 id="RunLoop-有哪些应用？"><a href="#RunLoop-有哪些应用？" class="headerlink" title="RunLoop 有哪些应用？"></a><code>RunLoop</code> 有哪些应用？</h4><blockquote>
+<p>常驻内存、AutoreleasePool 自动释放池</p>
+</blockquote>
+<h4 id="AutoreleasePool-和-RunLoop-有什么联系？"><a href="#AutoreleasePool-和-RunLoop-有什么联系？" class="headerlink" title="AutoreleasePool 和 RunLoop 有什么联系？"></a><code>AutoreleasePool</code> 和 <code>RunLoop</code> 有什么联系？</h4><blockquote>
+<p>iOS应用启动后会注册两个 Observer 管理和维护 AutoreleasePool。应用程序刚刚启动时默认注册了很多个Observer，其中有两个Observer的 callout 都是 _ wrapRunLoopWithAutoreleasePoolHandler，这两个是和自动释放池相关的两个监听。</p>
+</blockquote>
+<ul>
+<li>第一个 Observer 会监听 RunLoop 的进入，它会回调objc_autoreleasePoolPush() 向当前的 AutoreleasePoolPage 增加一个哨兵对象标志创建自动释放池。这个 Observer 的 order 是 -2147483647 优先级最高，确保发生在所有回调操作之前。</li>
+<li>第二个 Observer 会监听 RunLoop 的进入休眠和即将退出 RunLoop 两种状态，在即将进入休眠时会调用 objc_autoreleasePoolPop() 和 objc_autoreleasePoolPush() 根据情况从最新加入的对象一直往前清理直到遇到哨兵对象。而在即将退出 RunLoop 时会调用objc_autoreleasePoolPop() 释放自动自动释放池内对象。这个Observer 的 order 是 2147483647 ，优先级最低，确保发生在所有回调操作之后。</li>
+</ul>
+<h4 id="NSRunLoop-和-CFRunLoopRef-区别"><a href="#NSRunLoop-和-CFRunLoopRef-区别" class="headerlink" title="NSRunLoop 和 CFRunLoopRef 区别"></a>NSRunLoop 和 CFRunLoopRef 区别</h4><blockquote>
+<p>CFRunLoopRef 基于C 线程安全，NSRunLoop 基于 CFRunLoopRef 面向对象的API 是不安全的</p>
+</blockquote>
+<p>### </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/15/20180115Mac上常见的明令管理库/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yida">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="益达的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/15/20180115Mac上常见的明令管理库/" itemprop="url">Mac 工具库</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-15T10:11:12+08:00">
+                2018-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="各种Mac库的总结："><a href="#各种Mac库的总结：" class="headerlink" title="各种Mac库的总结："></a>各种Mac库的总结：</h2><h3 id="Home-Brew"><a href="#Home-Brew" class="headerlink" title="Home Brew"></a>Home Brew</h3><p>库功能：<strong>macOS 缺失的软件包的管理器</strong></p>
+<p>安装链接：「<a href="https://brew.sh/index_zh-cn" target="_blank" rel="noopener">官网安装入口请点击链接</a>」</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure>
+<p>能做什么：<br>使用 Homebrew 安装 Apple 没有预装但 你需要的东西。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 列出所有安装了的软件</span><br><span class="line">brew list</span><br><span class="line"># 查找 软件包</span><br><span class="line">brew search nginx</span><br><span class="line"># 安装</span><br><span class="line">brew install nginx</span><br><span class="line"># 卸载</span><br><span class="line">brew uninstall nginx</span><br><span class="line"></span><br><span class="line">## 列出所有安装了的软件</span><br><span class="line">brew cask list</span><br><span class="line">## 查找 软件</span><br><span class="line">brew cask search qq</span><br><span class="line">## 安装</span><br><span class="line">brew cask install qq</span><br><span class="line">## 卸载</span><br><span class="line">brew cask uninstall qq</span><br></pre></td></tr></table></figure>
+<h3 id="PIP："><a href="#PIP：" class="headerlink" title="PIP："></a>PIP：</h3><p>pip 是 Python 包管理工具，该工具提供了对Python 包的查找、下载、安装、卸载的功能。<br>Python 2.7.9 + 或 Python 3.4+ 以上版本都自带 pip 工具。<br><a href="http://www.runoob.com/w3cnote/python-pip-install-usage.html" target="_blank" rel="noopener">http://www.runoob.com/w3cnote/python-pip-install-usage.html</a></p>
+<p>pip –version</p>
+<p>未安装的情况：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py   # 下载安装脚本</span><br><span class="line">$ sudo python get-pip.py    # 运行安装脚本</span><br><span class="line"></span><br><span class="line">值得注意的小点：</span><br><span class="line">用哪个版本的 Python 运行安装脚本，pip 就被关联到哪个版本，如果是 Python3 则执行以下命令：</span><br><span class="line">$ sudo python3 get-pip.py    # 运行安装脚本。</span><br></pre></td></tr></table></figure></p>
+<h4 id="常用的命令："><a href="#常用的命令：" class="headerlink" title="常用的命令："></a>常用的命令：</h4><p>显示版本号： pip –version<br>获取帮助： pip –help<br>升级 pip： pip install -U pip<br>ps: 如果这个升级命令出现问题 ，可以使用以下命令<br>sudo easy_install –upgrade pip</p>
+<p>安装指定的包版本：<br>pip install SomePackage              # 最新版本<br>pip install SomePackage==1.0.4       # 指定版本<br>pip install ‘SomePackage&gt;=1.0.4’     # 最小版本</p>
+<p>类似安装Django: pip install Django==1.7</p>
+<p>升级包：（注意细节点： 升级指定的包，通过使用==, &gt;=, &lt;=, &gt;, &lt; 来指定一个版本号。）<br>pip install –upgrade SomePackage</p>
+<p>卸载包：<br>pip uninstall SomePackage<br>搜索包：<br>pip search SomePackage<br>显示安装包信息：<br>pip show<br>查看指定包的详细信息： pip show -f SomePackage<br>列出已安装的包: pip list<br>查看可升级的包: pip list -o</p>
+<h3 id="RubyGems"><a href="#RubyGems" class="headerlink" title="RubyGems"></a>RubyGems</h3><p>ruby的管理器<br>RubyGems is a package management framework for Ruby. Download the latest version here:</p>
+<p>更新：<br>gem update –system</p>
+<p>更新rubyGems<br>gem install rubygems-update<br>update_rubygems</p>
+<p>RVM多版本 Ruby 环境的管理和切换。<br>RVM 是一个命令行工具，可以提供一个便捷的多版本 Ruby 环境的管理和切换<br>罗列出已经安装的ruby的版本<br>rvm list known<br>安装指定的版本<br>rvm install 2.2.0 –disable-binary<br>切换ruby的版本<br>rvm use 2.2.0<br>设置默认版本<br>rvm use 2.2.0 –default<br>查询已经安装的ruby版本<br>rvm list<br>卸载rvm的已经安装的版本<br>rvm remove 1.8.7</p>
+<h3 id="Xcode-Select"><a href="#Xcode-Select" class="headerlink" title="Xcode-Select"></a>Xcode-Select</h3><p>当前的所有版本<br>xcode-select –print-path 查看当前正在使用的Xcode版本路径<br>切换当前版本<br>sudo xcode-select –switch /Applications/Xcode.app/Contents/Developer</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/13/20180113dsYM分析/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yida">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="益达的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/13/20180113dsYM分析/" itemprop="url">dSYM你是如何分析的</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-13T10:11:12+08:00">
+                2018-01-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>dSYM你是如何分析的<br>方法1 使用XCode<br>这种方法可能是最容易的方法了。</p>
+<p>要使用Xcode符号化 crash log，你需要下面所列的3个文件：<br>crash报告（.crash文件）<br>符号文件 (.dsymb文件)<br>应用程序文件 (appName.app文件，把IPA文件后缀改为zip，然后解压，Payload目录下的appName.app文件), 这里的appName是你的应用程序的名称。<br>把这3个文件放到同一个目录下，打开Xcode的Window菜单下的organizer，然后点击Devices tab，然后选中左边的Device Logs。<br>然后把.crash文件拖到Device Logs或者选择下面的import导入.crash文件。<br>这样你就可以看到crash的详细log了。<br>方法2 使用命令行工具symbolicatecrash<br>有时候Xcode不能够很好的符号化crash文件。我们这里介绍如何通过symbolicatecrash来手动符号化crash log。<br>在处理之前，请依然将“.app“, “.dSYM”和 “.crash”文件放到同一个目录下。现在打开终端(Terminal)然后输入如下的命令：<br>export DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer<br>然后输入命令：<br>/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/Library/PrivateFrameworks/DTDeviceKitBase.framework/Versions/A/Resources/symbolicatecrash appName.crash appName.app &gt; appName.log<br>现在，符号化的crash log就保存在appName.log中了。<br>方法3 使用命令行工具atos<br>如果你有多个“.ipa”文件，多个”.dSYMB”文件，你并不太确定到底“dSYMB”文件对应哪个”.ipa”文件，那么，这个方法就非常适合你。<br>特别当你的应用发布到多个渠道的时候，你需要对不同渠道的crash文件，写一个自动化的分析脚本的时候，这个方法就极其有用。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/10/20180102内存管理/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1173,396 +1622,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/02/20180114Mach-o的总结/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yida">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="益达的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/02/20180114Mach-o的总结/" itemprop="url">Mach_o文件</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-02T22:13:29+08:00">
-                2018-01-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="解析-MACH-O-文件"><a href="#解析-MACH-O-文件" class="headerlink" title="解析 MACH_O 文件"></a>解析 MACH_O 文件</h2><p>这篇文章描述了如何解析 Mach-O 文件并稍微解释了一下它的格式。这不是一份权威指南，不过当你不知从何开始时，它可能有些帮助。想了解更多信息，请考虑阅读官方文档和操作系统提供的头文件。</p>
-<p>Macho-O 是什么</p>
-<p>Mach-O 是 Mach object 文件格式的缩写，它是一种用于记录可执行文件、对象代码、共享库、动态加载代码和内存转储的文件格式。作为 a.out 格式的替代品，Mach-O 提供了更好的扩展性，并提升了符号表中信息的访问速度。</p>
-<p>大多数基于 Mach 内核的操作系统都使用 Mach-O。NeXTSTEP、OS X 和 iOS 是使用这种格式作为本地可执行文件、库和对象代码的例子</p>
-<p>Mach-O 格式<br>Mach-O 没有类似于 XML、YAML、JSON 等诸如此类的特殊格式，它只是一个二进制字节流，被划分为了有意义的数据块。这些块包含元信息，比如，字节顺序、cpu 类型、块的大小，等等。</p>
-<p>典型的 Mach-O 文件（对应的 官方文档 ）包含三个区域：</p>
-<ul>
-<li>头-包含该二进制文件的一般信息：字节顺序、（魔数）、cpu 类型、加载指令的数量等等。</li>
-<li>加载指令-它是一张包含很多内容的表，内容包括区域的位置、符号表、动态符号表等。每个加载指令都包含一个元信息，比如指令类型、名称、在二进制文件中的位置等等。</li>
-<li>数据-通常是对象文件中最大的部分。主要包含代码、数据，例如符号表，动态符号表等等。</li>
-</ul>
-<p>这里是一个简化的图形表示︰</p>
-<p><img src="http://ww3.sinaimg.cn/mw690/63918611gw1f8o4vtqj16j20c20aogn6.jpg" alt=""></p>
-<p>OS X 有两种类型的目标文件：Mach-O 文件和通用二进制文件，也叫作胖文件。它们之间的区别是：Mach-O 文件包含一种架构（i386、x86_64、arm64 等等）的对象代码，而胖文件可能包含若干包含不同架构（i386、x86_64、arm、arm64 等等）对象代码的对象文件。</p>
-<p>胖文件的结构相当简单︰ 胖文件头以及后面的 Mach-O 文件：<br>![](<a href="http://ww3.sinaimg.cn/mw690/63918611gw1f8o4vtyzozj20c40owdjr.jpg" target="_blank" rel="noopener">http://ww3.sinaimg.cn/mw690/63918611gw1f8o4vtyzozj20c40owdjr.jpg</a></p>
-<p><a href="https://www.cnblogs.com/oc-bowen/p/6000139.html" target="_blank" rel="noopener">https://www.cnblogs.com/oc-bowen/p/6000139.html</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/02/20180110消息机制基础知识点/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yida">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="益达的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/02/20180110消息机制基础知识点/" itemprop="url">object-class</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-02T10:11:12+08:00">
-                2018-01-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h4 id="object-class-类"><a href="#object-class-类" class="headerlink" title="object_class 类"></a>object_class 类</h4><p>Objective-C类是由Class类型来表示的，它实际上是一个指向objc_class结构体的指针。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">typedef struct object_class *Class</span><br><span class="line">它的定义如下：</span><br><span class="line">struct object_class&#123;</span><br><span class="line">    Class isa OBJC_ISA_AVAILABILITY;</span><br><span class="line">#if !__OBJC2__</span><br><span class="line">     Class super_class               OBJC2_UNAVAILABLE;  // 父类</span><br><span class="line">     const char *name               OBJC2_UNAVAILABLE;  // 类名</span><br><span class="line">     long version                 OBJC2_UNAVAILABLE;  // 类的版本信息，默认为0</span><br><span class="line">     long info      OBJC2_UNAVAILABLE;  // 类信息，供运行期使用的一些位标识</span><br><span class="line">     long instance_size     OBJC2_UNAVAILABLE;  // 该类的实例变量大小</span><br><span class="line">     struct objc_ivar_list *ivars   OBJC2_UNAVAILABLE;  // 该类的成员变量链表</span><br><span class="line">     struct objc_method_list *methodLists  OBJC2_UNAVAILABLE;  // 方法定义的链表</span><br><span class="line">     struct objc_cache *cache    OBJC2_UNAVAILABLE;  // 方法缓存</span><br><span class="line">     struct objc_protocol_list *protocols    OBJC2_UNAVAILABLE;  // 协议链表</span><br><span class="line">#endif</span><br><span class="line">&#125;OBJC2_UNAVAILABLE;</span><br></pre></td></tr></table></figure></p>
-<h4 id="objc-object-实例"><a href="#objc-object-实例" class="headerlink" title="objc_object 实例"></a>objc_object 实例</h4><p>objc_object是表示一个类的实例的结构体<br>它的定义如下：<br>struct objc_object{<br>     Class isa OBJC_ISA_AVAILABILITY;<br>};<br>typedef struct objc_object *id;<br>可以看到，这个结构体只有一个字体，即指向其类的isa指针。这样，当我们向一个Objective-C对象发送消息时，运行时库会根据实例对象的isa指针找到这个实例对象所属的类。Runtime库会在类的方法列表及父类的方法列表中去寻找与消息对应的selector指向的方法，找到后即运行这个方法。</p>
-<h4 id="元类-Meta-Class"><a href="#元类-Meta-Class" class="headerlink" title="元类(Meta Class)"></a>元类(Meta Class)</h4><p>meta-class是一个类对象的类。<br>在上面我们提到，所有的类自身也是一个对象，我们可以向这个对象发送消息(即调用类方法)。既然是对象，那么它也是一个objc_object指针，它包含一个指向其类的一个isa指针。那么，这个isa指针指向什么呢？<br>答案是，为了调用类方法，这个类的isa指针必须指向一个包含这些类方法的一个objc_class结构体.这就引出了meta-class的概念，meta-class中存储着一个类的所有类方法。所以，调用类方法的这个类对象的isa指针指向的就是meta-class当我们向一个对象发送消息时，runtime会在这个对象所属的这个类的方法列表中查找方法；而向一个类发送消息时，会在这个类的meta-class的方法列表中查找。<br>再深入一下，meta-class也是一个类，也可以向它发送一个消息，那么它的isa又是指向什么呢？为了不让这种结构无限延伸下去，Objective-C的设计者让所有的meta-class的isa指向基类的meta-class，以此作为它们的所属类。<br>即，任何NSObject继承体系下的meta-class都使用NSObject的meta-class作为自己的所属类，而基类的meta-class的isa指针是指向它自己。</p>
-<h4 id="Category"><a href="#Category" class="headerlink" title="Category"></a>Category</h4><p>Category是表示一个指向分类的结构体的指针，其定义如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">typedef struct objc_category *Category</span><br><span class="line">struct objc_category&#123;</span><br><span class="line">     char *category_name               OBJC2_UNAVAILABLE; // 分类名</span><br><span class="line">     char *class_name          OBJC2_UNAVAILABLE;  // 分类所属的类名</span><br><span class="line">     struct objc_method_list *instance_methods OBJC2_UNAVAILABLE;// 实例方法列表</span><br><span class="line">     struct objc_method_list *class_methods  OBJC2_UNAVAILABLE; // 类方法列表</span><br><span class="line">     struct objc_protocol_list *protocols  OBJC2_UNAVAILABLE; // 分类所实现的协议列表</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这个结构体主要包含了分类定义的实例方法与类方法，其中instance_methods列表是objc_class中方法列表的一个子集，而class_methods列表是元类方法列表的一个子集。可发现，类别中没有ivar成员变量指针，也就意味着：类别中不能够添加实例变量和属性,</p>
-<h4 id="SEL"><a href="#SEL" class="headerlink" title="SEL"></a>SEL</h4><p>SEL又叫选择器，是表示一个方法的selector的指针，其定义如下：<br>typedef struct objc_selector *SEL；<br>方法的selector用于表示运行时方法的名字。Objective-C在编译时，会依据每一个方法的名字、参数序列，生成一个唯一的整型标识(Int类型的地址)，这个标识就是SEL。<br>两个类之间，只要方法名相同，那么方法的SEL就是一样的，每一个方法都对应着一个SEL。所以在Objective-C同一个类(及类的继承体系)中，不能存在2个同名的方法，即使参数类型不同也不行<br>如在某一个类中定义以下两个方法: 错误<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">- (void)setWidth:(int)width;</span><br><span class="line">- (void)setWidth:(double)width;</span><br></pre></td></tr></table></figure></p>
-<p>当然，不同的类可以拥有相同的selector，这个没有问题。不同类的实例对象执行相同的selector时，会在各自的方法列表中去根据selector去寻找自己对应的IMP。<br>工程中的所有的SEL组成一个Set集合，如果我们想到这个方法集合中查找某个方法时，只需要去找到这个方法对应的SEL就行了，SEL实际上就是根据方法名hash化了的一个字符串，而对于字符串的比较仅仅需要比较他们的地址就可以了，可以说速度上无语伦比！<br>本质上，SEL只是一个指向方法的指针（准确的说，只是一个根据方法名hash化了的KEY值，能唯一代表一个方法），它的存在只是为了加快方法的查询速度。<br>通过下面三种方法可以获取SEL:<br>a、sel_registerName函数<br>b、Objective-C编译器提供的@selector()<br>c、NSSelectorFromString()方法</p>
-<h4 id="IMP"><a href="#IMP" class="headerlink" title="IMP"></a>IMP</h4><p>IMP实际上是一个函数指针，指向方法实现的地址。<br>其定义如下:<br>id (*IMP)(id, SEL,…)<br>第一个参数：是指向self的指针(如果是实例方法，则是类实例的内存地址；如果是类方法，则是指向元类的指针)<br>第二个参数：是方法选择器(selector)<br>接下来的参数：方法的参数列表。<br>前面介绍过的SEL就是为了查找方法的最终实现IMP的。由于每个方法对应唯一的SEL，因此我们可以通过SEL方便快速准确地获得它所对应的IMP，查找过程将在下面讨论。取得IMP后，我们就获得了执行这个方法代码的入口点，此时，我们就可以像调用普通的C语言函数一样来使用这个函数指针了。</p>
-<h4 id="Method"><a href="#Method" class="headerlink" title="Method"></a>Method</h4><p>Method用于表示类定义中的方法，则定义如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">typedef struct objc_method *Method</span><br><span class="line">struct objc_method&#123;</span><br><span class="line">    SEL method_name      OBJC2_UNAVAILABLE; // 方法名</span><br><span class="line">    char *method_types   OBJC2_UNAVAILABLE;</span><br><span class="line">    IMP method_imp       OBJC2_UNAVAILABLE; // 方法实现</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>我们可以看到该结构体中包含一个SEL和IMP，实际上相当于在SEL和IMP之间作了一个映射。有了SEL，我们便可以找到对应的IMP，从而调用方法的实现代码。</p>
-<h4 id="消息"><a href="#消息" class="headerlink" title="消息"></a>消息</h4><p>Objc 中发送消息是用中括号（[]）把接收者和消息括起来，而直到运行时才会把消息与方法实现绑定。有关消息发送和消息转发机制的原理，可以查看这篇文章。</p>
-<p>面对着 Cocoa 中大量 API，只知道简单的查文档和调用。还记得初学 Objective-C 时把 [receiver message] 当成简单的方法调用，而无视了“发送消息”这句话的深刻含义。其实 [receiver message] 会被编译器转化为：<br>objc_msgSend(receiver, selector)<br>如果消息含有参数，则为：<br>objc_msgSend(receiver, selector, arg1, arg2, …)<br>如果消息的接收者能够找到对应的 selector，那么就相当于直接执行了接收者这个对象的特定方法；否则，消息要么被转发，或是临时向接收者动态添加这个 selector 对应的实现内容，要么就干脆玩完崩溃掉。<br>现在可以看出[receiver message]真的不是一个简简单单的方法调用。因为这只是在编译阶段确定了要向接收者发送 message这条消息，而 receiver 将要如何响应这条消息，那就要看运行时发生的情况来决定了。<br>这里看起来像是objc_msgSend返回了数据，其实objc_msgSend从不返回数据而是你的方法被调用后返回了数据。下面详细叙述下消息发送步骤：<br>1、检测这个 selector 是不是要忽略的。比如 Mac OS X 开发，有了垃圾回收就不理会 retain, release 这些函数了。<br>2、检测这个 target 是不是 nil 对象。ObjC 的特性是允许对一个 nil 对象执行任何一个方法不会 Crash，因为会被忽略掉。<br>3、如果上面两个都过了，那就开始查找这个类的 IMP，先从 cache 里面找，完了找得到就跳到对应的函数去执行。<br>4、如果 cache 找不到就找一下方法分发表。<br>5、如果分发表找不到就到超类的分发表去找，一直找，直到找到NSObject类为止。<br>6、如果还找不到就要开始进入动态方法解析了，后面会提到。<br>PS:这里说的分发表其实就是Class中的方法列表，它将方法选择器和方法实现地址联系起来。</p>
-<p>其实编译器会根据情况在objc_msgSend, objc_msgSend_stret, objc_msgSendSuper, 或 objc_msgSendSuper_stret四个方法中选择一个来调用。如果消息是传递给超类，那么会调用名字带有”Super”的函数；如果消息返回值是数据结构而不是简单值时，那么会调用名字带有”stret”的函数。排列组合正好四个方法。<br>值得一提的是在i386 平台处理返回类型为浮点数的消息时，需要用到objc_msgSend_fpret函数来进行处理，这是因为返回类型为浮点数的函数对应的ABI(Application Binary Interface)与返回整型的函数的ABI不兼容。此时objc_msgSend不再适用，于是objc_msgSend_fpret被派上用场，它会对浮点数寄存器做特殊处理。不过在PPC 或 PPC64 平台是不需要麻烦它的。<br>PS：有木有发现这些函数的命名规律哦？带“Super”的是消息传递给超类；“stret”可分为“st”+“ret”两部分，分别代表“struct”和“return”；“fpret”就是“fp”+“ret”，分别代表“floating-point”和“return”。</p>
-<h4 id="动态方法解析"><a href="#动态方法解析" class="headerlink" title="动态方法解析"></a>动态方法解析</h4><p>你可以动态地提供一个方法的实现。例如我们可以用@dynamic关键字在类的实现文件中修饰一个属性：<br>@dynamic propertyName;<br>这表明我们会为这个属性动态提供存取方法，也就是说编译器不会再默认为我们生成setPropertyName:和propertyName方法，而需要我们动态提供。我们可以通过分别重载resolveInstanceMethod:和resolveClassMethod:方法分别添加实例方法实现和类方法实现。因为当Runtime系统在Cache和方法分发表中（包括超类）找不到要执行的方法时，Runtime会调用resolveInstanceMethod:或resolveClassMethod:来给程序员一次动态添加方法实现的机会。我们需要用class_addMethod函数完成向特定类添加特定方法实现的操作：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">void dynamicMethodIMP(id self, SEL _cmd) &#123;</span><br><span class="line">    // implementation ....</span><br><span class="line">&#125;</span><br><span class="line">@implementation MyClass</span><br><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)aSEL</span><br><span class="line">&#123;</span><br><span class="line">    if (aSEL == @selector(resolveThisMethodDynamically)) &#123;</span><br><span class="line">          class_addMethod([self class], aSEL, (IMP) dynamicMethodIMP, "v@:");</span><br><span class="line">          return YES;</span><br><span class="line">    &#125;</span><br><span class="line">    return [super resolveInstanceMethod:aSEL];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure></p>
-<p>上面的例子为resolveThisMethodDynamically方法添加了实现内容，也就是dynamicMethodIMP方法中的代码。其中 “v@:” 表示返回值和参数，这个符号涉及 Type Encoding<br>PS：动态方法解析会在消息转发机制浸入前执行。如果 respondsToSelector: 或 instancesRespondToSelector:方法被执行，动态方法解析器将会被首先给予一个提供该方法选择器对应的IMP的机会。如果你想让该方法选择器被传送到转发机制，那么就让resolveInstanceMethod:返回NO。</p>
-<h4 id="消息转发"><a href="#消息转发" class="headerlink" title="消息转发"></a>消息转发</h4><p>后面的文章中有补充</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/02/20180111+load的底层服务/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="yida">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="益达的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/02/20180111+load的底层服务/" itemprop="url">load的基础知识点</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-02T10:11:12+08:00">
-                2018-01-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>关于+load底层的总结</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> Loading isn't really thread safe.</span><br><span class="line"></span><br><span class="line">typedef void(*load_method_t)(id, SEL);</span><br><span class="line"></span><br><span class="line">struct loadable_class &#123;</span><br><span class="line">    Class cls;  // may be nil</span><br><span class="line">    IMP method;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct loadable_category &#123;</span><br><span class="line">    Category cat;  // may be nil</span><br><span class="line">    IMP method;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// List of classes that need +load called (pending superclass +load)</span><br><span class="line">// This list always has superclasses first because of the way it is constructed</span><br><span class="line">static struct loadable_class *loadable_classes = nil;</span><br><span class="line">static int loadable_classes_used = 0;</span><br><span class="line">static int loadable_classes_allocated = 0;</span><br><span class="line"></span><br><span class="line">// List of categories that need +load called (pending parent class +load)</span><br><span class="line">static struct loadable_category *loadable_categories = nil;</span><br><span class="line">static int loadable_categories_used = 0;</span><br><span class="line">static int loadable_categories_allocated = 0;</span><br><span class="line"></span><br><span class="line">提供指定的api来实现</span><br><span class="line">//基于基础类的实现</span><br><span class="line">void add_class_to_loadable_list(Class cls)</span><br><span class="line">//基于类别的实现</span><br><span class="line">void add_category_to_loadable_list(Category cat)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">void call_load_methods(void)</span><br><span class="line">&#123;</span><br><span class="line">    static bool loading = NO;</span><br><span class="line">    bool more_categories;</span><br><span class="line">    loadMethodLock.assertLocked();</span><br><span class="line">    // Re-entrant calls do nothing; the outermost call will finish the job.</span><br><span class="line">    if (loading) return;</span><br><span class="line">    loading = YES;</span><br><span class="line">    void *pool = objc_autoreleasePoolPush();</span><br><span class="line">    do &#123;</span><br><span class="line">        // 1. Repeatedly call class +loads until there aren't any more</span><br><span class="line">        while (loadable_classes_used &gt; 0) &#123;</span><br><span class="line">            call_class_loads();</span><br><span class="line">        &#125;</span><br><span class="line">        // 2. Call category +loads ONCE</span><br><span class="line">        more_categories = call_category_loads();</span><br><span class="line">        // 3. Run more +loads if there are classes OR more untried categories</span><br><span class="line">    &#125; while (loadable_classes_used &gt; 0  ||  more_categories);</span><br><span class="line">    objc_autoreleasePoolPop(pool);</span><br><span class="line">    loading = NO;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1613,7 +1672,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1663,7 +1722,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>

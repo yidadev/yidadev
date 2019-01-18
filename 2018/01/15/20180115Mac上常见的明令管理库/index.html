@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="各种Mac库的总结：Home Brew库功能：macOS 缺失的软件包的管理器 安装链接：「官网安装入口请点击链接」 1/usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot; 能做什么：使用 Homebrew 安装 Apple 没有预装但">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mac 工具库">
+<meta property="og:url" content="http://yoursite.com/2018/01/15/20180115Mac上常见的明令管理库/index.html">
+<meta property="og:site_name" content="益达的博客">
+<meta property="og:description" content="各种Mac库的总结：Home Brew库功能：macOS 缺失的软件包的管理器 安装链接：「官网安装入口请点击链接」 1/usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot; 能做什么：使用 Homebrew 安装 Apple 没有预装但">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-01-18T15:04:54.957Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mac 工具库">
+<meta name="twitter:description" content="各种Mac库的总结：Home Brew库功能：macOS 缺失的软件包的管理器 安装链接：「官网安装入口请点击链接」 1/usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot; 能做什么：使用 Homebrew 安装 Apple 没有预装但">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/15/20180115Mac上常见的明令管理库/">
+
+
+
+
+
+  <title>Mac 工具库 | 益达的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">益达的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/15/20180115Mac上常见的明令管理库/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="yida">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="益达的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mac 工具库</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-15T10:11:12+08:00">
+                2018-01-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="各种Mac库的总结："><a href="#各种Mac库的总结：" class="headerlink" title="各种Mac库的总结："></a>各种Mac库的总结：</h2><h3 id="Home-Brew"><a href="#Home-Brew" class="headerlink" title="Home Brew"></a>Home Brew</h3><p>库功能：<strong>macOS 缺失的软件包的管理器</strong></p>
+<p>安装链接：「<a href="https://brew.sh/index_zh-cn" target="_blank" rel="noopener">官网安装入口请点击链接</a>」</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure>
+<p>能做什么：<br>使用 Homebrew 安装 Apple 没有预装但 你需要的东西。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"># 列出所有安装了的软件</span><br><span class="line">brew list</span><br><span class="line"># 查找 软件包</span><br><span class="line">brew search nginx</span><br><span class="line"># 安装</span><br><span class="line">brew install nginx</span><br><span class="line"># 卸载</span><br><span class="line">brew uninstall nginx</span><br><span class="line"></span><br><span class="line">## 列出所有安装了的软件</span><br><span class="line">brew cask list</span><br><span class="line">## 查找 软件</span><br><span class="line">brew cask search qq</span><br><span class="line">## 安装</span><br><span class="line">brew cask install qq</span><br><span class="line">## 卸载</span><br><span class="line">brew cask uninstall qq</span><br></pre></td></tr></table></figure>
+<h3 id="PIP："><a href="#PIP：" class="headerlink" title="PIP："></a>PIP：</h3><p>pip 是 Python 包管理工具，该工具提供了对Python 包的查找、下载、安装、卸载的功能。<br>Python 2.7.9 + 或 Python 3.4+ 以上版本都自带 pip 工具。<br><a href="http://www.runoob.com/w3cnote/python-pip-install-usage.html" target="_blank" rel="noopener">http://www.runoob.com/w3cnote/python-pip-install-usage.html</a></p>
+<p>pip –version</p>
+<p>未安装的情况：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py   # 下载安装脚本</span><br><span class="line">$ sudo python get-pip.py    # 运行安装脚本</span><br><span class="line"></span><br><span class="line">值得注意的小点：</span><br><span class="line">用哪个版本的 Python 运行安装脚本，pip 就被关联到哪个版本，如果是 Python3 则执行以下命令：</span><br><span class="line">$ sudo python3 get-pip.py    # 运行安装脚本。</span><br></pre></td></tr></table></figure></p>
+<h4 id="常用的命令："><a href="#常用的命令：" class="headerlink" title="常用的命令："></a>常用的命令：</h4><p>显示版本号： pip –version<br>获取帮助： pip –help<br>升级 pip： pip install -U pip<br>ps: 如果这个升级命令出现问题 ，可以使用以下命令<br>sudo easy_install –upgrade pip</p>
+<p>安装指定的包版本：<br>pip install SomePackage              # 最新版本<br>pip install SomePackage==1.0.4       # 指定版本<br>pip install ‘SomePackage&gt;=1.0.4’     # 最小版本</p>
+<p>类似安装Django: pip install Django==1.7</p>
+<p>升级包：（注意细节点： 升级指定的包，通过使用==, &gt;=, &lt;=, &gt;, &lt; 来指定一个版本号。）<br>pip install –upgrade SomePackage</p>
+<p>卸载包：<br>pip uninstall SomePackage<br>搜索包：<br>pip search SomePackage<br>显示安装包信息：<br>pip show<br>查看指定包的详细信息： pip show -f SomePackage<br>列出已安装的包: pip list<br>查看可升级的包: pip list -o</p>
+<h3 id="RubyGems"><a href="#RubyGems" class="headerlink" title="RubyGems"></a>RubyGems</h3><p>ruby的管理器<br>RubyGems is a package management framework for Ruby. Download the latest version here:</p>
+<p>更新：<br>gem update –system</p>
+<p>更新rubyGems<br>gem install rubygems-update<br>update_rubygems</p>
+<p>RVM多版本 Ruby 环境的管理和切换。<br>RVM 是一个命令行工具，可以提供一个便捷的多版本 Ruby 环境的管理和切换<br>罗列出已经安装的ruby的版本<br>rvm list known<br>安装指定的版本<br>rvm install 2.2.0 –disable-binary<br>切换ruby的版本<br>rvm use 2.2.0<br>设置默认版本<br>rvm use 2.2.0 –default<br>查询已经安装的ruby版本<br>rvm list<br>卸载rvm的已经安装的版本<br>rvm remove 1.8.7</p>
+<h3 id="Xcode-Select"><a href="#Xcode-Select" class="headerlink" title="Xcode-Select"></a>Xcode-Select</h3><p>当前的所有版本<br>xcode-select –print-path 查看当前正在使用的Xcode版本路径<br>切换当前版本<br>sudo xcode-select –switch /Applications/Xcode.app/Contents/Developer</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/13/20180113dsYM分析/" rel="next" title="dSYM你是如何分析的">
+                <i class="fa fa-chevron-left"></i> dSYM你是如何分析的
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/16/20180116runloop的基础知识点/" rel="prev" title="Runloop的定义">
+                Runloop的定义 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">yida</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#各种Mac库的总结："><span class="nav-number">1.</span> <span class="nav-text">各种Mac库的总结：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Home-Brew"><span class="nav-number">1.1.</span> <span class="nav-text">Home Brew</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PIP："><span class="nav-number">1.2.</span> <span class="nav-text">PIP：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的命令："><span class="nav-number">1.2.1.</span> <span class="nav-text">常用的命令：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RubyGems"><span class="nav-number">1.3.</span> <span class="nav-text">RubyGems</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xcode-Select"><span class="nav-number">1.4.</span> <span class="nav-text">Xcode-Select</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">yida</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
